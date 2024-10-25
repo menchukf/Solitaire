@@ -40,7 +40,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
         */
        Card card = new Card(2, Card.Suit.Diamonds);
        System.out.println(card);
+	   JPanel foundation=new JPanel(new GridLayout());
+	   JLayeredPane tableau=new JLayeredPane();
+	   JPanel deck =new JPanel(new GridLayout());
+	   foundation.setBounds(00,100,100,100);
+	   deck.setBounds(400,100,200,100);
+	   tableau.setBounds(100,400,200,200);
        this.add(card);    
+	   this.add(deck);
+	   
+	   this.add(foundation);
+	   this.add(tableau);
+	   foundation.setBorder(BorderFactory.createLineBorder(Color.red));
+	   
+	   tableau.setBorder(BorderFactory.createLineBorder(Color.red));
+	   deck.setBorder(BorderFactory.createLineBorder(Color.red));
+
 
         this.setVisible(true);
     }

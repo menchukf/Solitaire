@@ -39,13 +39,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
         * once you have confirmed that the card shows up properly. The code below should allow you to play the solitare
         * game once it's fully created.
         */
-       Card card = new Card(2, Card.Suit.Diamonds);
-       System.out.println(card);
+
 	   JPanel foundation=new JPanel(new GridLayout());
 	   JPanel tableau=new JPanel(new GridLayout());
 	   JPanel deck =new JPanel(new GridLayout());
-	   foundation.setBounds(00,000,400,200);
-	   deck.setBounds(500,000,400,200);
+	   foundation.setBounds(00,000,600,200);
+	   deck.setBounds(700,000,300,200);
 	   tableau.setBounds(00,200,1000,800);
 	   Stack <Card> testStack=new Stack();
 
@@ -55,7 +54,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		testStack.add(new Card(8, Card.Suit.Diamonds));
 		testStack.add(new Card(7, Card.Suit.Clubs));
 	   tableau.add(drawPile(testStack));
-       this.add(card);    
+
 	   this.add(deck);
 	   
 	   this.add(foundation);
@@ -67,6 +66,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 
         this.setVisible(true);
+		System.out.print("Gui displayed");
     }
 
 
@@ -80,7 +80,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	for (int i = 0; i < cards.length; i++) {
 		JPanel card = (Card) cards[i];
-		card.setBounds(0, 400-100*i,100, 145);
+		card.setBounds(0, cards.length*50-50*i,100, 145);
 		pile.add(card, i);
 	}
 	return pile;

@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Stack;
 
 
 public class GUI extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
@@ -41,11 +42,19 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
        Card card = new Card(2, Card.Suit.Diamonds);
        System.out.println(card);
 	   JPanel foundation=new JPanel(new GridLayout());
-	   JLayeredPane tableau=new JLayeredPane();
+	   JPanel tableau=new JPanel(new GridLayout());
 	   JPanel deck =new JPanel(new GridLayout());
-	   foundation.setBounds(00,100,100,100);
-	   deck.setBounds(400,100,200,100);
-	   tableau.setBounds(100,400,200,200);
+	   foundation.setBounds(00,000,400,200);
+	   deck.setBounds(500,000,400,200);
+	   tableau.setBounds(00,200,1000,800);
+	   Stack <Card> testStack=new Stack();
+
+		testStack.add(new Card(3, Card.Suit.Diamonds));
+		testStack.add(new Card(4, Card.Suit.Diamonds));
+		testStack.add(new Card(5, Card.Suit.Clubs));
+		testStack.add(new Card(8, Card.Suit.Diamonds));
+		testStack.add(new Card(7, Card.Suit.Clubs));
+	   tableau.add(drawPile(testStack));
        this.add(card);    
 	   this.add(deck);
 	   
@@ -60,6 +69,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
         this.setVisible(true);
     }
 
+
+	public JLayeredPane drawPile(Stack<Card> stackIn) {
+
+    Object cards[];
+
+    cards = stackIn.toArray(); //please note we convert this stack to an array so that we can iterate through it backwards while drawing. You’ll need to cast each element inside cards to a <Card> in order to use the methods to adjust their position
+	
+	JLayeredPane pile=new JLayeredPane();
+
+	for (int i = 0; i < cards.length; i++) {
+		JPanel card = (Card) cards[i];
+		card.setBounds(0, 400-100*i,100, 145);
+		pile.add(card, i);
+	}
+	return pile;
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {

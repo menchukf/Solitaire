@@ -70,7 +70,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		System.out.print("Gui displayed");
     }
 
-
+//precondition:
+//postcondition:
 	public JLayeredPane drawPile(Stack<Card> stackIn) {
 
     Object cards[];
@@ -87,22 +88,39 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	return pile;
 	}
 
+//precondition:
+//postcondition:
+	public void update() {
+		for (Stack <Card> column : game.columns){
+			//tableau.add(drawPile(column));
+		}
+
+
+
+	}
+
 	@Override
+	//precondition:
+//postcondition:
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	//precondition:
+//postcondition:
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	//precondition:
+//postcondition:
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

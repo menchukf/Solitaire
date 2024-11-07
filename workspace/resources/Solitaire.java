@@ -9,6 +9,7 @@ import resources.Card.Suit;
 public class Solitaire {
 	ArrayList<Stack <Card>> columns;
 	Queue<Card> deck;
+	Stack<Card> discard;
 	ArrayList<Stack <Card>> foundations;
 //precondition:
 //postcondition:
@@ -71,9 +72,9 @@ public ArrayList<Stack <Card>> getColumns(){
 
 public Card draw(){
 	Card c=deck.poll();
+	discard.add(c);
 	return c;
 }
-
 }
 	//the part of your program that's in charge of game rules goes here.
 

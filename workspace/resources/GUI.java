@@ -100,9 +100,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			i++;
 			JLayeredPane colum=drawPile(column);
 			colum.setBounds(400*i, 200, 400, 1200);
+			this.add(colum);
 			tableau.add(colum);
+			
 		}
-		
+
 		
 
 
@@ -141,7 +143,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		//unpause timer or remove method
 	}
 
 	@Override
@@ -153,7 +155,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		Card cards[];
+		for(Stack<Card> c :game.columns){
+		Card array[];	
+		array = c.toArray(); //please note we convert this stack to an array
+		for(Card ca : array){
+			cards[0]=c;
+		}
+		}
+		for(Card :)
 	}
 
 	@Override

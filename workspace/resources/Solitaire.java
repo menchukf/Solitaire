@@ -5,7 +5,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import resources.Card.Suit;
-
+	//the part of your program that's in charge of game rules goes here.
 public class Solitaire {
 	ArrayList<Stack <Card>> columns;
 	Queue<Card> deck;
@@ -24,7 +24,7 @@ public boolean isLegalMove (Card selected, int x, int y){
 //postcondition:
 public void initialize(){
 
-	for(int i=0;i<=5;i++){
+	for(int i=0;i<=4;i++){
 		Suit suit=Suit.Spades;
 		if (i==0){
 			suit=Suit.Clubs;
@@ -43,19 +43,19 @@ public void initialize(){
 			deck.add(new Card(j, suit));
 		}
 	}
-
+	System.out.print("deck generated");
 	for(int i=0;i<7;i++){
 		Stack<Card> column =new Stack<Card>();
 		
 		for(int j=0;j<i;j++){
-//			Card c=deck.poll();
-			column.add(deck.poll());
+			Card c=deck.poll();
+			column.add(c);
 		}
 		columns.add(column);
 	}
 	for(int i=0;i<5;i++){
 		Stack<Card> part =new Stack<Card>();
-		foundations.add(part);
+		foundations.add(drawPile(part));
 
 	}
 	
@@ -76,5 +76,5 @@ public Card draw(){
 	return c;
 }
 }
-	//the part of your program that's in charge of game rules goes here.
+
 

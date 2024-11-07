@@ -2,6 +2,8 @@ package resources;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import resources.Card.Suit;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	Solitaire game;
 	Card selected;
+	JPanel foundation=new JPanel(new GridLayout());
+	JPanel tableau=new JPanel(new GridLayout());
+	JPanel deck =new JPanel(new GridLayout());
    public GUI(Solitaire game){
 	   this.game= game;
         //Create and set up the window.
@@ -41,13 +46,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
         * game once it's fully created.
         */
 
-	   JPanel foundation=new JPanel(new GridLayout());
-	   JPanel tableau=new JPanel(new GridLayout());
-	   JPanel deck =new JPanel(new GridLayout());
+	   
 	   foundation.setBounds(00,000,600,200);
 	   deck.setBounds(700,000,300,200);
 	   tableau.setBounds(00,200,1000,800);
-	   Stack <Card> testStack=new Stack();
+	   Stack <Card> testStack=new Stack<Card>();
 
 		testStack.add(new Card(3, Card.Suit.Diamonds));
 		testStack.add(new Card(4, Card.Suit.Diamonds));
@@ -64,7 +67,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   
 	   tableau.setBorder(BorderFactory.createLineBorder(Color.red));
 	   deck.setBorder(BorderFactory.createLineBorder(Color.red));
-
+	   deck.add(new Card(100, Suit.Spades));
 
         this.setVisible(true);
 		System.out.print("Gui displayed");
@@ -91,9 +94,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //precondition:
 //postcondition:
 	public void update() {
+		
+		int i=0;
 		for (Stack <Card> column : game.columns){
-			//tableau.add(drawPile(column));
+			i++;
+			JLayeredPane colum=drawPile(column);
+			colum.setBounds(400*i, 200, 400, 1200);
+			tableau.add(colum);
 		}
+		
 
 
 
@@ -120,7 +129,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-
+		for (Card c : game.deck){
+			if(c.contains(arg0.getX(),arg0.getY())){
+				selected=c;
+				System.out.print(c.toString());
+			}
+		}
 	}
 
 	@Override
@@ -132,7 +146,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		//pause timer if there is one
 	}
 
 	@Override

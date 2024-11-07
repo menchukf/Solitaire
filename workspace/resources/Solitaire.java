@@ -47,6 +47,7 @@ public void initialize(){
 		Stack<Card> column =new Stack<Card>();
 		
 		for(int j=0;j<i;j++){
+//			Card c=deck.poll();
 			column.add(deck.poll());
 		}
 		columns.add(column);
@@ -65,6 +66,12 @@ public Queue<Card> getDeck(){
 }
 public ArrayList<Stack <Card>> getColumns(){
 	return columns;
+}
+
+
+public Card draw(){
+	Card c=deck.poll();
+	return c;
 }
 
 }

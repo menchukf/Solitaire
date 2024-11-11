@@ -24,7 +24,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	JPanel tableau=new JPanel(new GridLayout());
 	JPanel deck =new JPanel(new GridLayout());
    public GUI(Solitaire game){
-	   this.game= game;
+	   this.game=game;
         //Create and set up the window.
        setTitle("Solitaire");
        setSize(900,700);
@@ -41,8 +41,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
        }
        
        /*******
-        * This is just a test to make sure images are being read correctly on your machine. Please replace
-        * once you have confirmed that the card shows up properly. The code below should allow you to play the solitare
+        *  The code below should allow you to play the solitare
         * game once it's fully created.
         */
 
@@ -58,9 +57,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		testStack.add(new Card(8, Card.Suit.Diamonds));
 		testStack.add(new Card(7, Card.Suit.Clubs));
 	   tableau.add(drawPile(testStack));
-
-	   this.add(deck);
 	   
+	   this.add(deck);
 	   this.add(foundation);
 	   this.add(tableau);
 	   foundation.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -104,7 +102,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			tableau.add(colum);
 			
 		}
-
+		for(int j=0;j<5;j++){
+			Stack<Card> part =game.foundations.get(j);
+			foundation.add(drawPile(part));
+	
+		}
 		
 
 
@@ -128,8 +130,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	}
 
 	@Override
-	//precondition:
-//postcondition:
+	//precondition:click
+//postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		for (Card c : game.deck){
@@ -155,21 +157,26 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		Card cards[];
+		Object cards[];
 		for(Stack<Card> c :game.columns){
-		Card array[];	
-		array = c.toArray(); //please note we convert this stack to an array
-		for(Card ca : array){
-			cards[0]=c;
+
+		cards = c.toArray(); //we convert this stack to an array
+		for(Object card : cards){
+			Card ca=(Card) card;
+			if(ca.contains(arg0.getPoint())){
+				selected=ca;
+			}
 		}
 		}
-		for(Card :)
+		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		for (Stack<Card> column : game.columns){
+
+		}
 	}
 
 	@Override

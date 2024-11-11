@@ -8,7 +8,7 @@ import resources.Card.Suit;
 	//the part of your program that's in charge of game rules goes here.
 public class Solitaire {
 	ArrayList<Stack <Card>> columns;
-	Queue<Card> deck;
+	Stack<Card> deck;
 	Stack<Card> discard;
 	ArrayList<Stack <Card>> foundations;
 //precondition:
@@ -39,7 +39,7 @@ public void initialize(){
 			suit=Suit.Hearts;
 		}
 	
-		for (int j=2;j<=13;j++){
+		for (int j=1;j<=13;j++){
 			deck.add(new Card(j, suit));
 		}
 	}
@@ -48,21 +48,21 @@ public void initialize(){
 		Stack<Card> column =new Stack<Card>();
 		
 		for(int j=0;j<i;j++){
-			Card c=deck.poll();
+			Card c=deck.pop();
 			column.add(c);
 		}
 		columns.add(column);
 	}
 	for(int i=0;i<5;i++){
 		Stack<Card> part =new Stack<Card>();
-		foundations.add(drawPile(part));
+		foundations.add(part);
 
 	}
 	
 
 }
 
-public Queue<Card> getDeck(){
+public Stack<Card> getDeck(){
 	return deck;
 }
 public ArrayList<Stack <Card>> getColumns(){
@@ -71,10 +71,17 @@ public ArrayList<Stack <Card>> getColumns(){
 
 
 public Card draw(){
-	Card c=deck.poll();
+	Card c=deck.pop();
 	discard.add(c);
 	return c;
 }
+
+
+public boolean isLegalMove(Card c ){
+	boolean valid = false;
+	return valid;
 }
 
 
+
+}

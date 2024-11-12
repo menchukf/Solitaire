@@ -1,4 +1,5 @@
 package resources;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
@@ -7,15 +8,19 @@ import java.util.Stack;
 import resources.Card.Suit;
 	//the part of your program that's in charge of game rules goes here.
 public class Solitaire {
-	ArrayList<Stack <Card>> columns;
-	Stack<Card> deck;
-	Stack<Card> discard;
-	ArrayList<Stack <Card>> foundations;
+	ArrayList<Stack <Card>> columns=new ArrayList<Stack <Card>>();
+	Stack<Card> deck=new Stack<>();
+	Stack<Card> discard=new Stack<>();
+	ArrayList<Stack <Card>> foundations=new ArrayList<Stack<Card>>();
 //precondition:
 //postcondition:
-public boolean isLegalMove (Card selected, int x, int y){
+public boolean isLegalMove (Card selected,Stack<Card> destination){
+	boolean valid=true;
+	Card last=destination.pop();
+	if(last)
 
 
+	destination.add(last);
 	return true;
 }
 
@@ -76,11 +81,6 @@ public Card draw(){
 	return c;
 }
 
-
-public boolean isLegalMove(Card c ){
-	boolean valid = false;
-	return valid;
-}
 
 
 

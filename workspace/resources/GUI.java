@@ -13,6 +13,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Stack;
 
 
@@ -23,6 +24,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	JPanel foundation=new JPanel(new GridLayout());
 	JPanel tableau=new JPanel(new GridLayout());
 	JPanel deck =new JPanel(new GridLayout());
+	ArrayList<JLayeredPane> columns =new ArrayList<>();
    public GUI(Solitaire game){
 	   this.game=game;
         //Create and set up the window.
@@ -61,8 +63,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   this.add(deck);
 	   this.add(foundation);
 	   this.add(tableau);
-	   foundation.setBorder(BorderFactory.createLineBorder(Color.red));
 	   
+	   foundation.setBorder(BorderFactory.createLineBorder(Color.red));
 	   tableau.setBorder(BorderFactory.createLineBorder(Color.red));
 	   deck.setBorder(BorderFactory.createLineBorder(Color.red));
 	   deck.add(new Card(100, Suit.Spades));
@@ -92,15 +94,25 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //precondition:
 //postcondition:
 	public void update() {
-		
+		for(int i=0;i<columns.size();i++){
+			columns.remove(i);
+			i--;
+		}
 		int i=0;
 		for (Stack <Card> column : game.columns){
 			i++;
 			JLayeredPane colum=drawPile(column);
+			columns.add(colum);
 			colum.setBounds(400*i, 200, 400, 1200);
 			this.add(colum);
 			tableau.add(colum);
 			
+/* 			for(int i=0;i<9;i++){
+				Stack<Card> column=game.columns.get(i); 
+				JLayeredPane c=drawPile(column);
+				tableau.add(c);
+			   }
+	*/
 		}
 		for(int j=0;j<5;j++){
 			Stack<Card> part =game.foundations.get(j);
@@ -134,12 +146,20 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		if (selected==null){
 		for (Card c : game.deck){
 			if(c.contains(arg0.getX(),arg0.getY())){
 				selected=c;
 				System.out.print(c.toString());
 			}
 		}
+	}else{
+		for(JLayeredPane p: columns){
+			if (p.contains(arg0.getPoint())){
+				if(game.isLegalMove(selected, arg0.getX, ABORT))
+			}
+		}
+	}
 	}
 
 	@Override

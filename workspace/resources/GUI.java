@@ -29,7 +29,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   this.game=game;
         //Create and set up the window.
        setTitle("Solitaire");
-       setSize(900,700);
+       setSize(1200,700);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
        // this supplies the background
@@ -51,7 +51,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   foundation.setBounds(00,000,600,200);
 	   deck.setBounds(700,000,300,200);
 	   tableau.setBounds(00,200,1000,800);
-	   Stack <Card> testStack=new Stack<Card>();
+	/* 
+	  Stack <Card> testStack=new Stack<Card>();
 
 		testStack.add(new Card(3, Card.Suit.Diamonds));
 		testStack.add(new Card(4, Card.Suit.Diamonds));
@@ -59,7 +60,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		testStack.add(new Card(8, Card.Suit.Diamonds));
 		testStack.add(new Card(7, Card.Suit.Clubs));
 	   tableau.add(drawPile(testStack));
-	   
+	   */
 	   this.add(deck);
 	   this.add(foundation);
 	   this.add(tableau);
@@ -67,14 +68,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   foundation.setBorder(BorderFactory.createLineBorder(Color.red));
 	   tableau.setBorder(BorderFactory.createLineBorder(Color.red));
 	   deck.setBorder(BorderFactory.createLineBorder(Color.red));
-	   deck.add(new Card(100, Suit.Spades));
+//	   Card back = new Card(100, Suit.Spades);
+//	   deck.add(back);
 
         this.setVisible(true);
 		System.out.print("Gui displayed");
     }
 
-//precondition:
-//postcondition:
+//precondition:method is called on a stack with cards in it
+//postcondition:returns a JLayeredPane containing all the cards in the stack
 	public JLayeredPane drawPile(Stack<Card> stackIn) {
 
     Object cards[];
@@ -92,7 +94,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	}
 
 //precondition:
-//postcondition:
+//postcondition: dsplay is updated
 	public void update() {
 		for(int i=0;i<columns.size();i++){
 			columns.remove(i);
@@ -114,6 +116,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			   }
 	*/
 		}
+		System.out.print("columns displayed");
 		for(int j=0;j<5;j++){
 			Stack<Card> part =game.foundations.get(j);
 			foundation.add(drawPile(part));
@@ -146,19 +149,35 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		System.out.println("mouse clicked");
+		if(
+			deck.contains(arg0.getPoint())){
+			Card c=game.draw();
+			deck.add(c);
+		}
+
+	
+	
 		if (selected==null){
+			
 		for (Card c : game.deck){
 			if(c.contains(arg0.getX(),arg0.getY())){
 				selected=c;
 				System.out.print(c.toString());
 			}
 		}
-	}else{
+
+		}else{
 		for(JLayeredPane p: columns){
 			if (p.contains(arg0.getPoint())){
-				if(game.isLegalMove(selected, arg0.getX, ABORT))
+				if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(p)))){
+					update();
+					System.out.println("card moved");
+					return;
+				}
 			}
 		}
+		
 	}
 	}
 
@@ -195,7 +214,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		for (Stack<Card> column : game.columns){
-
+			
 		}
 	}
 

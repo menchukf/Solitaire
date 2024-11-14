@@ -17,11 +17,32 @@ public class Solitaire {
 public boolean isLegalMove (Card selected,Stack<Card> destination){
 	boolean valid=true;
 	Card last=destination.pop();
-	if(last)
+	if(columns.contains(destination)){
 
+	
+	if(last.suit.isRed!=selected.suit.isRed){
+		destination.add(last);
+		destination.add(selected);
+		valid=true;
 
-	destination.add(last);
-	return true;
+	}else{
+		destination.add(last);
+		valid=false;
+
+	}
+
+	}else if(foundations.contains(destination)){
+		if(last.suit==selected.suit && (selected.value==1 || last.value+1==selected.value) ){
+			destination.add(last);
+			destination.add(selected);
+			valid=true;
+		}else{
+			destination.add(last);
+			valid=false;
+		}
+
+	}
+	return valid;
 }
 
 //starts the game, displaying teh deck and the columns
@@ -49,7 +70,18 @@ public void initialize(){
 		}
 	}
 	System.out.print("deck generated");
-	for(int i=0;i<7;i++){
+	for(int i=0;i<deck.size();i++){
+		Card c = deck.pop();
+		int index = (int) (Math.random()*deck.size());
+		System.out.print(index);
+		deck.add(index, c);
+		
+	}
+	System.out.println("deck shuffled");
+
+
+
+	for(int i=0;i<9;i++){
 		Stack<Card> column =new Stack<Card>();
 		
 		for(int j=0;j<i;j++){
@@ -64,7 +96,7 @@ public void initialize(){
 
 	}
 	
-
+	System.out.print("game initialized");
 }
 
 public Stack<Card> getDeck(){
@@ -73,7 +105,16 @@ public Stack<Card> getDeck(){
 public ArrayList<Stack <Card>> getColumns(){
 	return columns;
 }
+public boolean isGameWon(){
+	boolean won=true;
+	for(Stack <Card> f : foundations){
+		if (f.lastIndexOf(f.peek())!=13){
+			won=false;
+		}
+	}
 
+	return won;
+}
 
 public Card draw(){
 	Card c=deck.pop();

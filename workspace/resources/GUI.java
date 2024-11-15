@@ -20,7 +20,7 @@ import java.util.Stack;
 public class GUI extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
 
 	Solitaire game;
-	Card selected;
+	Card selected=null;
 	JPanel foundation=new JPanel(new GridLayout());
 	JPanel tableau=new JPanel(new GridLayout());
 	JPanel deck =new JPanel(new GridLayout());
@@ -29,7 +29,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   this.game=game;
         //Create and set up the window.
        setTitle("Solitaire");
-       setSize(1200,700);
+       setSize(1200,770);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
        // this supplies the background
@@ -48,8 +48,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
         */
 
 	   
-	   foundation.setBounds(00,000,600,200);
-	   deck.setBounds(700,000,300,200);
+	   foundation.setBounds(00,000,600,150);
+	   deck.setBounds(700,000,300,150);
 	   tableau.setBounds(00,200,1000,800);
 	/* 
 	  Stack <Card> testStack=new Stack<Card>();
@@ -68,11 +68,24 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   foundation.setBorder(BorderFactory.createLineBorder(Color.red));
 	   tableau.setBorder(BorderFactory.createLineBorder(Color.red));
 	   deck.setBorder(BorderFactory.createLineBorder(Color.red));
-//	   Card back = new Card(100, Suit.Spades);
-//	   deck.add(back);
 
-        this.setVisible(true);
+
+	   Card back = new Card(100, Suit.Spades);
+	   deck.add(back);
+	   game.initialize();
+	   for(Card c: game.deck){
+			c.addMouseListener(this);
+	   }
+	   for(Stack<Card> col: game.getColumns()){
+		for(Card c :col){
+			c.addMouseListener(this);
+		}
+
+	   }
+    	this.setVisible(true);
 		System.out.print("Gui displayed");
+		revalidate();
+	   repaint();
     }
 
 //precondition:method is called on a stack with cards in it
@@ -81,8 +94,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
     Object cards[];
 
-    cards = stackIn.toArray(); //please note we convert this stack to an array so that we can iterate through it backwards while drawing. You’ll need to cast each element inside cards to a <Card> in order to use the methods to adjust their position
-	
+    cards = stackIn.toArray(); //please note we convert this stack to an array so that we can iterate through it backwards while drawing. 
+	//You’ll need to cast each element inside cards to a <Card> in order to use the methods to adjust their position
+
 	JLayeredPane pile=new JLayeredPane();
 
 	for (int i = 0; i < cards.length; i++) {
@@ -148,10 +162,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	//precondition:click
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+
 		System.out.println("mouse clicked");
-		if(
-			deck.contains(arg0.getPoint())){
+		if(deck.contains(arg0.getPoint())){
 			Card c=game.draw();
 			deck.add(c);
 		}
@@ -160,26 +173,53 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	
 		if (selected==null){
 			
-		for (Card c : game.deck){
+		
+			if(deck.contains(arg0.getX(),arg0.getY())){
+				
+				selected=game.deck.pop();
+				System.out.print(selected.toString()+"selected");
+			}
+		
+		for (Stack <Card> col : game.getColumns()){
+		for (Card c : col){
 			if(c.contains(arg0.getX(),arg0.getY())){
 				selected=c;
-				System.out.print(c.toString());
+				System.out.print(c.toString()+"selected");
+				
 			}
 		}
-
+	}
+			System.out.print("Card selected");
+			return;
 		}else{
 		for(JLayeredPane p: columns){
 			if (p.contains(arg0.getPoint())){
-				if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(p)))){
-					update();
-					System.out.println("card moved");
-					return;
+				Stack <Card> start =game.deck;
+				for(Card c: game.deck){
+					if (c.equals(selected)){
+						start=game.deck;
+					}
+			   }
+			   for(Stack<Card> col: game.getColumns()){
+				for(Card c :col){
+					if (c.equals(selected)){
+						start=col;
+					}
 				}
+		
+			   }
+			   if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(p)),start)){
+				update();
+				System.out.println("card moved");
+				return;
+			}
+		}
+				
 			}
 		}
 		
 	}
-	}
+	
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -196,7 +236,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		Object cards[];
+/*		Object cards[];
 		for(Stack<Card> c :game.columns){
 
 		cards = c.toArray(); //we convert this stack to an array
@@ -207,7 +247,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			}
 		}
 		}
-		
+		*/
 	}
 
 	@Override

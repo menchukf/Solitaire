@@ -14,12 +14,18 @@ public class Solitaire {
 	ArrayList<Stack <Card>> foundations=new ArrayList<Stack<Card>>();
 //precondition:
 //postcondition:
-public boolean isLegalMove (Card selected,Stack<Card> destination){
-	boolean valid=true;
-	Card last=destination.pop();
+public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
+	boolean valid=false;
+	start.pop();
+   Card last=null;
 	if(columns.contains(destination)){
-
-	
+	if (selected.value==13){
+		valid=true;
+		return true;
+	}
+	if(destination.empty()==false){
+	last=destination.pop();
+}
 	if(last.suit.isRed!=selected.suit.isRed){
 		destination.add(last);
 		destination.add(selected);
@@ -32,7 +38,12 @@ public boolean isLegalMove (Card selected,Stack<Card> destination){
 	}
 
 	}else if(foundations.contains(destination)){
-		if(last.suit==selected.suit && (selected.value==1 || last.value+1==selected.value) ){
+		if (selected.value==1){
+			valid=true;
+			return true;
+		}
+		last =destination.pop();
+		if(last.suit==selected.suit && last.value+1==selected.value ){
 			destination.add(last);
 			destination.add(selected);
 			valid=true;
@@ -42,6 +53,10 @@ public boolean isLegalMove (Card selected,Stack<Card> destination){
 		}
 
 	}
+	if (valid==false){
+		start.add(selected);
+	}
+
 	return valid;
 }
 

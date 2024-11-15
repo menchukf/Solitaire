@@ -13,7 +13,7 @@ public class Main {
 
 		Solitaire game= new Solitaire();
 		GUI gui = new GUI(game);
-		game.initialize();
+		//game.initialize();
 		gui.update();
 	
 			

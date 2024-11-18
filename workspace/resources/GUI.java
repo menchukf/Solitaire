@@ -118,8 +118,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		for (Stack <Card> column : game.columns){
 			i++;
 			JLayeredPane colum=drawPile(column);
-			columns.add(colum);
+
+			
 			colum.setBounds(400*i, 200, 400, 1200);
+			columns.add(colum);
 			this.add(colum);
 			tableau.add(colum);
 			
@@ -136,7 +138,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			foundation.add(drawPile(part));
 	
 		}
-		
+		if (game.isGameWon()){
+			JPanel finish=new JPanel(new FlowLayout());
+			finish.add("Congrajulations you win", finish);
+		}
 
 
 
@@ -163,60 +168,76 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
 
-		System.out.println("mouse clicked");
-		if(deck.contains(arg0.getPoint())){
-			Card c=game.draw();
-			deck.add(c);
+
+	System.out.println(arg0.getComponent());
+		if(selected==null){
+			selected=(Card) arg0.getComponent();
+		}else{
+			for (Stack <Card> col : game.getColumns()){
+				 	for (Card c : col){
+				 		if(c.equals((Card)(arg0.getComponent()))){
+
+				 			System.out.print(c.toString()+"selected");
+							return;
+				 		}
+				 	}
+				}
 		}
+		if(deck.contains(arg0.getX(),arg0.getY())){
+				
+			selected=game.deck.pop();
+			System.out.print(selected.toString()+"selected");
+		}
+	 	System.out.println("mouse clicked");
+	// 	if(deck.contains(arg0.getPoint())){
+	// 		Card c=game.draw();
+	// 		deck.add(c);
+	// 	}
 
 	
-	
-		if (selected==null){
+
 			
 		
-			if(deck.contains(arg0.getX(),arg0.getY())){
-				
-				selected=game.deck.pop();
-				System.out.print(selected.toString()+"selected");
-			}
 		
-		for (Stack <Card> col : game.getColumns()){
-		for (Card c : col){
-			if(c.contains(arg0.getX(),arg0.getY())){
-				selected=c;
-				System.out.print(c.toString()+"selected");
+	// 	for (Stack <Card> col : game.getColumns()){
+	// 	for (Card c : col){
+	// 		if(c.contains(arg0.getX(),arg0.getY())){
+	// 			selected=c;
+	// 			System.out.print(c.toString()+"selected");
 				
+	// 		}
+	// 	}
+	// }
+	// 		System.out.print("Card selected");
+	// 		return;
+	// 	}else{
+	 	for(JLayeredPane p: columns){
+	 		for(Stack <Card> col :game.columns){
+				if (p.contains(arg0.getPoint())){
+	 			Stack <Card> start =game.deck;
+	 			for(Card c: game.deck){
+	 				if (c.equals(selected)){
+	 					start=game.deck;
+	 				}
+	 		   }
 			}
-		}
-	}
-			System.out.print("Card selected");
-			return;
-		}else{
-		for(JLayeredPane p: columns){
-			if (p.contains(arg0.getPoint())){
-				Stack <Card> start =game.deck;
-				for(Card c: game.deck){
-					if (c.equals(selected)){
-						start=game.deck;
-					}
-			   }
-			   for(Stack<Card> col: game.getColumns()){
-				for(Card c :col){
-					if (c.equals(selected)){
-						start=col;
-					}
-				}
+	 		   for(Stack<Card> col: game.getColumns()){
+	 			for(Card c :col){
+	 				if (c.equals(selected)){
+	 					start=col;
+	 				}
+	 			}
 		
-			   }
-			   if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(p)),start)){
-				update();
-				System.out.println("card moved");
-				return;
-			}
-		}
+	 		   }
+	 		   if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(selected)),start)){
+	// 			update();
+	// 			System.out.println("card moved");
+	// 			return;
+	// 		}
+	 	}
 				
-			}
-		}
+	// 		}
+	// 	}
 		
 	}
 	

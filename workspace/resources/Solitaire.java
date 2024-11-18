@@ -23,9 +23,15 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		valid=true;
 		return true;
 	}
-	if(destination.empty()==false){
-	last=destination.pop();
-}
+	try {
+		last=destination.pop();	
+	} catch (Exception e) {
+		// TODO: handle exception
+		System.out.print("last = null");
+		return false;
+	}
+	
+	
 	if(last.suit.isRed!=selected.suit.isRed){
 		destination.add(last);
 		destination.add(selected);
@@ -65,8 +71,8 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 //postcondition:
 public void initialize(){
 
-	for(int i=0;i<=4;i++){
-		Suit suit=Suit.Spades;
+	for(int i=0;i<4;i++){
+		Suit suit=Suit.Diamonds;
 		if (i==0){
 			suit=Suit.Clubs;
 		}
@@ -84,7 +90,7 @@ public void initialize(){
 			deck.add(new Card(j, suit));
 		}
 	}
-	System.out.print("deck generated");
+	
 	for(int i=0;i<deck.size();i++){
 		Card c = deck.pop();
 		int index = (int) (Math.random()*deck.size());
@@ -92,7 +98,7 @@ public void initialize(){
 		deck.add(index, c);
 		
 	}
-	System.out.println("deck shuffled");
+	
 
 
 
@@ -111,7 +117,7 @@ public void initialize(){
 
 	}
 	
-	System.out.print("game initialized");
+	//System.out.print("game initialized");
 }
 
 public Stack<Card> getDeck(){
@@ -123,7 +129,16 @@ public ArrayList<Stack <Card>> getColumns(){
 public boolean isGameWon(){
 	boolean won=true;
 	for(Stack <Card> f : foundations){
-		if (f.lastIndexOf(f.peek())!=13){
+		try {
+			if(f.peek()==null){
+				won=false;
+				return won;
+			}	
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			return false;
+		}if(f.lastIndexOf(f.peek())!=13){
 			won=false;
 		}
 	}

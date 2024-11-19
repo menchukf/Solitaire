@@ -229,14 +229,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	 			}
 		
 	 		   }
-	 		   if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(selected)),start)){
-	// 			update();
-	// 			System.out.println("card moved");
-	// 			return;
-	}//change
-				
-	// 		}
-	// 	}
+	 		   //if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(selected)),start)){
+			   //}
 		
 	}
 	

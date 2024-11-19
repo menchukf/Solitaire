@@ -168,11 +168,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
 
-
+		Stack <Card> start=game.deck;
 	System.out.println(arg0.getComponent());
 		if(selected==null){
 			selected=(Card) arg0.getComponent();
-		}else{
+
 			for (Stack <Card> col : game.getColumns()){
 				 	for (Card c : col){
 				 		if(c.equals((Card)(arg0.getComponent()))){
@@ -182,57 +182,35 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 				 		}
 				 	}
 				}
-		}
+		
 		if(deck.contains(arg0.getX(),arg0.getY())){
 				
 			selected=game.deck.pop();
 			System.out.print(selected.toString()+"selected");
-		}
-	 	System.out.println("mouse clicked");
-	// 	if(deck.contains(arg0.getPoint())){
-	// 		Card c=game.draw();
-	// 		deck.add(c);
-	// 	}
-
-	
-
-			
-		
-		
-	// 	for (Stack <Card> col : game.getColumns()){
-	// 	for (Card c : col){
-	// 		if(c.contains(arg0.getX(),arg0.getY())){
-	// 			selected=c;
-	// 			System.out.print(c.toString()+"selected");
-				
-	// 		}
-	// 	}
-	// }
-	// 		System.out.print("Card selected");
-	// 		return;
-	// 	}else{
-	 	for(JLayeredPane p: columns){
-	 		for(Stack <Card> col :game.columns){
-				if (p.contains(arg0.getPoint())){
-	 			Stack <Card> start =game.deck;
-	 			for(Card c: game.deck){
-	 				if (c.equals(selected)){
-	 					start=game.deck;
-	 				}
-	 		   }
-			}
+		}	
+		}else{
+				Stack<Card> destination=game.foundations.get(0);
+			   Card d=(Card)arg0.getComponent();
 	 		   for(Stack<Card> col: game.getColumns()){
 	 			for(Card c :col){
 	 				if (c.equals(selected)){
 	 					start=col;
 	 				}
+					 if (c.equals(d)){
+						destination=col;
+					}
 	 			}
-		
-	 		   }
-	 		   //if(game.isLegalMove(selected, game.getColumns().get(columns.lastIndexOf(selected)),start)){
-			   //}
-		
-	}
+				System.out.println(start);
+				System.out.println(destination);
+	 		   if(game.isLegalMove(selected,destination ,start)){
+				System.out.println("card moved");
+			}
+			
+			   }
+			}
+			   System.out.println("mouse clicked");
+			   this.update();
+			}
 	
 
 	@Override
@@ -245,12 +223,42 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		//pause timer if there is one
+		// no action to perform if mouse exits
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-/*		Object cards[];
+		// code copied from mouseclicked to only select, not place card
+		/*if(selected==null){//only if a card isn't already selected
+			selected=(Card) arg0.getComponent();
+		
+			for (Stack <Card> col : game.getColumns()){
+				 	for (Card c : col){
+				 		if(c.equals((Card)(arg0.getComponent()))){
+
+				 			System.out.print(c.toString()+"selected");
+							return;
+				 		}
+				 	}
+				}
+		
+		if(deck.contains(arg0.getPoint())){
+				
+			selected=game.deck.pop();
+			System.out.print(selected.toString()+"selected");
+		}
+		}
+	 	System.out.println("mouse pressed");
+
+
+*/
+
+
+
+
+
+		/*		Object cards[];
 		for(Stack<Card> c :game.columns){
 
 		cards = c.toArray(); //we convert this stack to an array

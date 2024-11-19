@@ -16,7 +16,7 @@ public class Solitaire {
 //postcondition:
 public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
 	boolean valid=false;
-	start.pop();
+	//start.pop();
    Card last=null;
 	if(columns.contains(destination)){
 	if (selected.value==13){
@@ -94,7 +94,6 @@ public void initialize(){
 	for(int i=0;i<deck.size();i++){
 		Card c = deck.pop();
 		int index = (int) (Math.random()*deck.size());
-		System.out.print(index);
 		deck.add(index, c);
 		
 	}

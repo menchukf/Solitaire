@@ -21,6 +21,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	Solitaire game;
 	Card selected=null;
+	Stack<Card> start=null;
 	JPanel foundation=new JPanel(new GridLayout());
 	JPanel tableau=new JPanel(new GridLayout());
 	JPanel deck =new JPanel(new GridLayout());
@@ -104,6 +105,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		card.setBounds(0, cards.length*50-50*i,100, 145);
 		pile.add(card, i);
 	}
+
 	return pile;
 	}
 
@@ -118,19 +120,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		for (Stack <Card> column : game.columns){
 			i++;
 			JLayeredPane colum=drawPile(column);
-
-			
-			colum.setBounds(400*i, 200, 400, 1200);
+			//colum.setBounds(400*i, 200, 400, 1200);
 			columns.add(colum);
 			this.add(colum);
 			tableau.add(colum);
 			
-/* 			for(int i=0;i<9;i++){
-				Stack<Card> column=game.columns.get(i); 
-				JLayeredPane c=drawPile(column);
+ 			for(i=0;i<9;i++){
+				Stack<Card> col=game.columns.get(i); 
+				JLayeredPane c=drawPile(col);
 				tableau.add(c);
 			   }
-	*/
+	
 		}
 		System.out.print("columns displayed");
 		for(int j=0;j<5;j++){
@@ -140,6 +140,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 		if (game.isGameWon()){
 			JPanel finish=new JPanel(new FlowLayout());
+			finish.setBounds(0,0,800,800);
 			finish.add("Congrajulations you win", finish);
 		}
 
@@ -227,10 +228,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	}
 
 	@Override
+	//precondition:mouse is clicked on the screen 
+	//postconditionif not on a card, nothing happens, if card is already selected, does nothing, but if neither thaen the card that the mouse is pressed on is selected
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+
 		// code copied from mouseclicked to only select, not place card
-		/*if(selected==null){//only if a card isn't already selected
+		
+		// /* 
+		if(selected==null){//only if a card isn't already selected
 			selected=(Card) arg0.getComponent();
 		
 			for (Stack <Card> col : game.getColumns()){
@@ -251,13 +256,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 	 	System.out.println("mouse pressed");
 
-
-*/
-
-
-
-
-
 		/*		Object cards[];
 		for(Stack<Card> c :game.columns){
 
@@ -269,15 +267,30 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			}
 		}
 		}
-		*/
+		//*/
 	}
 
 	@Override
+	//precondition:mouse is clicked on the screen 
+	//postconditionif not on a card or no card is selected, nothing happens, ohterwise card si attempted to move 
+	
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		// places but doesnt select a card
+	/*	if (selected!= null){
 		for (Stack<Card> column : game.columns){
-			
+			for(Card c : column){
+				if(c.equals((Card)arg0.getComponent())){
+					boolean moved=game.isLegalMove(selected,start,column);
+					if(moved){
+						System.out.println("Card moved");
+					}else{
+						System.out.println("illegal move");
+					}
+				}
+			}
 		}
+		}
+		*/
 	}
 
 	@Override

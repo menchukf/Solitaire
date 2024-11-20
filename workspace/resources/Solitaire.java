@@ -26,8 +26,8 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	try {
 		last=destination.pop();	
 	} catch (Exception e) {
-		// TODO: handle exception
-		System.out.print("last = null");
+		// TODO: prints the exeption
+		System.out.print("last = null , not legal move?");
 		return false;
 	}
 	
@@ -128,17 +128,17 @@ public ArrayList<Stack <Card>> getColumns(){
 public boolean isGameWon(){
 	boolean won=true;
 	for(Stack <Card> f : foundations){
-		try {
+		if(f!= null && !f.isEmpty()){
 			if(f.peek()==null){
 				won=false;
 				return won;
+			}
+			if(f.lastIndexOf(f.peek())==13){
+				won=true;
 			}	
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
-			return false;
-		}if(f.lastIndexOf(f.peek())!=13){
+		} else {
 			won=false;
+
 		}
 	}
 

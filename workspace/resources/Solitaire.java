@@ -23,6 +23,12 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		valid=true;
 		return true;
 	}
+	if(!destination.isEmpty()){
+		last=destination.pop();
+	}else{
+		return false;
+	}
+	/*
 	try {
 		last=destination.pop();	
 	} catch (Exception e) {
@@ -30,6 +36,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		System.out.print("last = null , not legal move?");
 		return false;
 	}
+		*/
 	
 	
 	if(last.suit.isRed!=selected.suit.isRed){
@@ -116,7 +123,7 @@ public void initialize(){
 
 	}
 	
-	//System.out.print("game initialized");
+	System.out.print("game initialized");
 }
 
 public Stack<Card> getDeck(){

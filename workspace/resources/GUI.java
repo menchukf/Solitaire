@@ -66,9 +66,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   this.add(foundation);
 	   this.add(tableau);
 	   
-	   foundation.setBorder(BorderFactory.createLineBorder(Color.red));
-	   tableau.setBorder(BorderFactory.createLineBorder(Color.red));
-	   deck.setBorder(BorderFactory.createLineBorder(Color.red));
+	   //foundation.setBorder(BorderFactory.createLineBorder(Color.red));
+	   //tableau.setBorder(BorderFactory.createLineBorder(Color.red));
+	   //deck.setBorder(BorderFactory.createLineBorder(Color.red));
 
 
 	   Card back = new Card(100, Suit.Spades);
@@ -99,11 +99,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	//You’ll need to cast each element inside cards to a <Card> in order to use the methods to adjust their position
 
 	JLayeredPane pile=new JLayeredPane();
-
+	//pile.setPreferredSize(new Dimension(100,800));
 	for (int i = 0; i < cards.length; i++) {
 		JPanel card = (Card) cards[i];
+		
+		//pile.add(card, i);
+		pile.add(card);
 		card.setBounds(0, cards.length*50-50*i,100, 145);
-		pile.add(card, i);
 	}
 
 	return pile;
@@ -120,18 +122,19 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		for (Stack <Card> column : game.columns){
 			i++;
 			JLayeredPane colum=drawPile(column);
-			//colum.setBounds(400*i, 200, 400, 1200);
+			colum.setBounds(400*i, 200, 400, 1200);
 			columns.add(colum);
 			this.add(colum);
 			tableau.add(colum);
-			
- 			for(i=0;i<9;i++){
-				Stack<Card> col=game.columns.get(i); 
+		}
+ 			/*for(int j=0;j<9;j++){
+				Stack<Card> col=game.columns.get(j); 
 				JLayeredPane c=drawPile(col);
+				c.setBorder(BorderFactory.createLineBorder(Color.green));
 				tableau.add(c);
 			   }
-	
-		}
+	*/
+		
 		System.out.print("columns displayed");
 		for(int j=0;j<5;j++){
 			Stack<Card> part =game.foundations.get(j);
@@ -201,11 +204,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 						destination=col;
 					}
 	 			}
-				System.out.println(start);
-				System.out.println(destination);
+				//System.out.println(start);
+				//System.out.println(destination);
 	 		   if(game.isLegalMove(selected,destination ,start)){
-				System.out.println("card moved");
-			}
+					System.out.println("card moved");
+				}
 			
 			   }
 			}
@@ -216,7 +219,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		// no function for this to perform
 		//unpause timer or remove method
 	}
 

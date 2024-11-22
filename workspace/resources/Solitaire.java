@@ -83,13 +83,13 @@ public void initialize(){
 		if (i==0){
 			suit=Suit.Clubs;
 		}
-		if(i==2){
+		if(i==1){
 			suit=Suit.Spades;
 		}
-		if (i==3){
+		if (i==2){
 			suit=Suit.Diamonds;
 		}
-		if(i==4){
+		if(i==3){
 			suit=Suit.Hearts;
 		}
 	
@@ -97,7 +97,7 @@ public void initialize(){
 			deck.add(new Card(j, suit));
 		}
 	}
-	
+	//System.out.println(deck);
 	for(int i=0;i<deck.size();i++){
 		Card c = deck.pop();
 		int index = (int) (Math.random()*deck.size());

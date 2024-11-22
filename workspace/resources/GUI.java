@@ -60,7 +60,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		testStack.add(new Card(5, Card.Suit.Clubs));
 		testStack.add(new Card(8, Card.Suit.Diamonds));
 		testStack.add(new Card(7, Card.Suit.Clubs));
-	   tableau.add(drawPile(testStack));
+	   tableau.add(drawPile(testSftack));
 	   */
 	   this.add(deck);
 	   this.add(foundation);
@@ -73,7 +73,109 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	   Card back = new Card(100, Suit.Spades);
 	   deck.add(back);
+	back.addMouseListener(new MouseListener() {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			selected=game.deck.peek();
+			start=game.deck;
+			
+			
+			
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			selected=game.deck.peek();
+			start=game.deck;
+			
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			selected=game.deck.peek();
+			start=game.deck;
+			
+			
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			// do nothing
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+			//also do nothing
+		}
+		
+	});
+	foundation.addMouseListener(new MouseListener(){
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// places a card if its a legal move
+			if (selected!= null){
+				if(selected.value==1){
+					for(Stack<Card> f : game.foundations){
+						if(f.isEmpty()){
+							f.add(selected);
+							return;
+						}
+					}
+				}
+				if(game.isLegalMove(selected, start,game.foundations.get(0))){
+					System.out.print("card moved to foundation");
+				}
+			}
+			
+			
+			
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+		
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			// do nothing
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+			//also do nothing
+		}
+		
+	});
+
+
+
 	   game.initialize();
+
 	   for(Card c: game.deck){
 			c.addMouseListener(this);
 	   }
@@ -102,22 +204,23 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	//pile.setPreferredSize(new Dimension(100,800));
 	for (int i = 0; i < cards.length; i++) {
 		JPanel card = (Card) cards[i];
-		
-		//pile.add(card, i);
-		pile.add(card);
+		this.add(card);
+		pile.add(card, i);
+		//pile.add(card);
 		card.setBounds(0, cards.length*50-50*i,100, 145);
 	}
 
 	return pile;
 	}
 
-//precondition:
-//postcondition: dsplay is updated
+//precondition:game is initialized
+//postcondition: display is updated
 	public void update() {
 		for(int i=0;i<columns.size();i++){
 			columns.remove(i);
 			i--;
 		}
+		tableau.removeAll();
 		int i=0;
 		for (Stack <Card> column : game.columns){
 			i++;
@@ -176,24 +279,29 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	System.out.println(arg0.getComponent());
 		if(selected==null){
 			selected=(Card) arg0.getComponent();
-
+			System.out.println("I selected "+selected);
+			selected.setBorder(BorderFactory.createLineBorder(Color.red));
 			for (Stack <Card> col : game.getColumns()){
 				 	for (Card c : col){
 				 		if(c.equals((Card)(arg0.getComponent()))){
 
 				 			System.out.print(c.toString()+"selected");
-							return;
+
 				 		}
 				 	}
 				}
+
 		
+/* 
 		if(deck.contains(arg0.getX(),arg0.getY())){
 				
 			selected=game.deck.pop();
 			System.out.print(selected.toString()+"selected");
 		}	
-		}else{
-				Stack<Card> destination=game.foundations.get(0);
+		}
+*/ 
+				}else{
+					Stack<Card> destination=game.getColumns().getLast();
 			   Card d=(Card)arg0.getComponent();
 	 		   for(Stack<Card> col: game.getColumns()){
 	 			for(Card c :col){
@@ -204,16 +312,26 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 						destination=col;
 					}
 	 			}
+			}
+
 				//System.out.println(start);
 				//System.out.println(destination);
 	 		   if(game.isLegalMove(selected,destination ,start)){
 					System.out.println("card moved");
+					selected.setBorder(null);
+				}else{
+					selected.setBorder(null);
+					selected=(Card) arg0.getComponent();
+					start=destination;
+					selected.setBorder(BorderFactory.createLineBorder(Color.red));
+					System.out.println("new card ()"+ selected.toString()+") selected");
 				}
-			
+				
 			   }
-			}
+				
 			   System.out.println("mouse clicked");
 			   this.update();
+			
 			}
 	
 
@@ -238,26 +356,26 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		// code copied from mouseclicked to only select, not place card
 		
 		// /* 
-		if(selected==null){//only if a card isn't already selected
-			selected=(Card) arg0.getComponent();
+		// if(selected==null){//only if a card isn't already selected
+		// 	selected=(Card) arg0.getComponent();
 		
-			for (Stack <Card> col : game.getColumns()){
-				 	for (Card c : col){
-				 		if(c.equals((Card)(arg0.getComponent()))){
+		// 	for (Stack <Card> col : game.getColumns()){
+		// 		 	for (Card c : col){
+		// 		 		if(c.equals((Card)(arg0.getComponent()))){
 
-				 			System.out.print(c.toString()+"selected");
-							return;
-				 		}
-				 	}
-				}
+		// 		 			System.out.print(c.toString()+"selected");
+		// 					return;
+		// 		 		}
+		// 		 	}
+		// 		}
 		
-		if(deck.contains(arg0.getPoint())){
+		// if(deck.contains(arg0.getPoint())){
 				
-			selected=game.deck.pop();
-			System.out.print(selected.toString()+"selected");
-		}
-		}
-	 	System.out.println("mouse pressed");
+		// 	selected=game.deck.pop();
+		// 	System.out.print(selected.toString()+"selected");
+		// }
+		// }
+	 	// System.out.println("mouse pressed");
 
 		/*		Object cards[];
 		for(Stack<Card> c :game.columns){

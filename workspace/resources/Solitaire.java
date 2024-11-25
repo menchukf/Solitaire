@@ -19,55 +19,63 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	//start.pop();
    Card last=null;
 	if(columns.contains(destination)){
-	if (selected.value==13){
+	if (selected.value==13 && destination.isEmpty()){
 		valid=true;
+		destination.add(selected);
 		return true;
 	}
 	if(!destination.isEmpty()){
-		last=destination.pop();
+		last=destination.firstElement();
 	}else{
+		start.add(selected);
+		System.out.print("card returned to start");
 		return false;
 	}
-	/*
-	try {
-		last=destination.pop();	
-	} catch (Exception e) {
-		// TODO: prints the exeption
-		System.out.print("last = null , not legal move?");
-		return false;
-	}
-		*/
 	
 	
-	if(last.suit.isRed!=selected.suit.isRed){
-		destination.add(last);
-		destination.add(selected);
+	if((last.suit.isRed && !selected.suit.isRed) || (!last.suit.isRed && selected.suit.isRed)){
+		if(last.value-1==selected.value){
+		destination.add(0, last);
+		destination.add(0, selected);
+		System.out.println(selected + " moved to column");
 		valid=true;
-
+		}
 	}else{
 		destination.add(last);
+		start.add(selected);
+		System.out.print("card returned to start");
 		valid=false;
 
 	}
 
 	}else if(foundations.contains(destination)){
-		if (selected.value==1){
+		if (selected.value==1 && destination.isEmpty()){
 			valid=true;
 			return true;
 		}
-		last =destination.pop();
+		if (!destination.isEmpty()){
+		last =destination.firstElement();
+		
 		if(last.suit==selected.suit && last.value+1==selected.value ){
-			destination.add(last);
-			destination.add(selected);
+			destination.add(0,last);
+			destination.add(0, selected);;
 			valid=true;
 		}else{
-			destination.add(last);
+			destination.add(0,last);
+			start.add(0, selected);;
 			valid=false;
+			System.out.print("card returned to start");
+		}
+		}else{
+		valid=false;
+		start.add(0,selected);
 		}
 
 	}
+
 	if (valid==false){
-		start.add(selected);
+		start.add(0,selected);
+		System.out.print("card returned to start");
 	}
 
 	return valid;

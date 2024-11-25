@@ -239,6 +239,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	*/
 		
 		System.out.print("columns displayed");
+		foundation.removeAll();
 		for(int j=0;j<5;j++){
 			Stack<Card> part =game.foundations.get(j);
 			foundation.add(drawPile(part));
@@ -301,7 +302,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 */ 
 				}else{
-					Stack<Card> destination=game.getColumns().getLast();
+					Stack<Card> destination=game.discard;
 			   Card d=(Card)arg0.getComponent();
 	 		   for(Stack<Card> col: game.getColumns()){
 	 			for(Card c :col){
@@ -324,7 +325,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					selected=(Card) arg0.getComponent();
 					start=destination;
 					selected.setBorder(BorderFactory.createLineBorder(Color.red));
-					System.out.println("new card ()"+ selected.toString()+") selected");
+					System.out.println("new card ("+ selected.toString()+") selected");
 				}
 				
 			   }

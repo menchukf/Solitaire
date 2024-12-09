@@ -16,7 +16,7 @@ public class Solitaire {
 //postcondition:
 public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
 	boolean valid=false;
-	//start.pop();
+	start.pop();
    Card last=null;
 	if(columns.contains(destination)){
 	if (selected.value==13 && destination.isEmpty()){
@@ -26,10 +26,13 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	}
 	if(!destination.isEmpty()){
 		last=destination.firstElement();
-	}else{
-		start.add(selected);
-		System.out.print("card returned to start");
+	}if (destination==start) {
+		System.out.println("no card movement");
 		return false;
+	}else{
+		start.add(0,selected);
+		System.out.print("card returned to start");
+		valid=false;
 	}
 	
 	
@@ -41,8 +44,8 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		valid=true;
 		}
 	}else{
-		destination.add(last);
-		start.add(selected);
+		destination.add(0,last);
+		start.add(0,selected);
 		System.out.print("card returned to start");
 		valid=false;
 
@@ -51,7 +54,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	}else if(foundations.contains(destination)){
 		if (selected.value==1 && destination.isEmpty()){
 			valid=true;
-			return true;
+			return valid;
 		}
 		if (!destination.isEmpty()){
 		last =destination.firstElement();
@@ -123,6 +126,7 @@ public void initialize(){
 			Card c=deck.pop();
 			column.add(c);
 		}
+		//column.add(new Card(100,Suit.Spades));
 		columns.add(column);
 	}
 	for(int i=0;i<5;i++){

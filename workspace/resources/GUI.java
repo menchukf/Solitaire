@@ -1,20 +1,16 @@
 package resources;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import resources.Card.Suit;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Stack;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import resources.Card.Suit;
 
 
 public class GUI extends JFrame implements ActionListener, MouseListener, MouseMotionListener{
@@ -79,11 +75,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
 			selected=game.deck.peek();
+			deck.add(selected);
 			start=game.deck;
 			
-			
-			
-			//throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
 		}
 
 		@Override
@@ -123,7 +117,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	foundation.addMouseListener(new MouseListener(){
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// places a card if its a legal move
+			// moves card to foundations if it is an ace or if it can move to foundation
+			
 			if (selected!= null){
 				if(selected.value==1){
 					for(Stack<Card> f : game.foundations){
@@ -132,7 +127,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 							return;
 						}
 					}
+				}else if (selected.value==game.foundations.get(0).get(0).value+1 && selected.suit==game.foundations.get(0).get(0).suit) {
+					(game.foundations.get(0)).add(selected);
 				}
+				//moves card
 				if(game.isLegalMove(selected, start,game.foundations.get(0))){
 					System.out.print("card moved to foundation");
 				}
@@ -202,18 +200,19 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	JLayeredPane pile=new JLayeredPane();
 	//pile.setPreferredSize(new Dimension(100,800));
-	for (int i = 0; i < cards.length; i++) {
+	for (int i = cards.length-1; i >=0; i--) {
 		JPanel card = (Card) cards[i];
 		this.add(card);
-		pile.add(card, i);
+		pile.add(card, cards.length-i);
 		//pile.add(card);
-		card.setBounds(0, cards.length*50-50*i,100, 145);
+		card.setBounds(0,50*i,100, 145);
+//		card.setBounds(0, cards.length*50-50*i,100, 145);
 	}
 
 	return pile;
 	}
 
-//precondition:game is initialized
+//precondition:gui and game are both initialized
 //postcondition: display is updated
 	public void update() {
 		for(int i=0;i<columns.size();i++){
@@ -238,7 +237,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			   }
 	*/
 		
-		System.out.print("columns displayed");
+		//System.out.print("columns displayed");
 		foundation.removeAll();
 		for(int j=0;j<5;j++){
 			Stack<Card> part =game.foundations.get(j);
@@ -260,15 +259,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Mouse dragged");
 	}
 
 	@Override
 	//precondition:
 //postcondition:
 	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		// updates game
+		this.update();
 	}
 
 	@Override
@@ -277,7 +276,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	public void mouseClicked(MouseEvent arg0) {
 
 		Stack <Card> start=game.deck;
-	System.out.println(arg0.getComponent());
+		System.out.println("Card: " + arg0.getComponent());
 		if(selected==null){
 			selected=(Card) arg0.getComponent();
 			System.out.println("I selected "+selected);

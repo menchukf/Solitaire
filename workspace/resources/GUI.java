@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import resources.Card.Suit;
 
 
@@ -132,6 +133,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 				}
 				//moves card
 				if(game.isLegalMove(selected, start,game.foundations.get(0))){
+					start.pop();
+					game.foundations.get(0).add(selected);
 					System.out.print("card moved to foundation");
 				}
 			}
@@ -247,8 +250,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		if (game.isGameWon()){
 			JPanel finish=new JPanel(new FlowLayout());
 			finish.setBounds(0,0,800,800);
-			finish.add("Congrajulations you win", finish);
-		}
+			JLabel notice =new JLabel("Congrajulations you win");
+			finish.add("windisplay", notice);
+	
 
 
 
@@ -317,7 +321,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 				//System.out.println(start);
 				//System.out.println(destination);
 	 		   if(game.isLegalMove(selected,destination ,start)){
-					System.out.println("card moved");
+					start.pop();
+					destination.add(selected);
+					System.out.println("card moved in columns");
 					selected.setBorder(null);
 				}else{
 					selected.setBorder(null);

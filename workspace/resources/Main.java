@@ -1,12 +1,5 @@
 package resources;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Stack;
-
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -15,7 +8,8 @@ public class Main {
 		GUI gui = new GUI(game);
 		//game.initialize();
 		gui.update();
-	
+		System.out.println(game.testWin());
+		gui.update();
 			
 		
 	}

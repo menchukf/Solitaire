@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Stack;
+import javax.management.monitor.GaugeMonitor;
 
 import resources.Card.Suit;
 	//the part of your program that's in charge of game rules goes here.
@@ -16,36 +17,36 @@ public class Solitaire {
 //postcondition:
 public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
 	boolean valid=false;
-	start.pop();
-   Card last=null;
+	//start.pop();
+   Card last=destination.peek();
 	if(columns.contains(destination)){
 	if (selected.value==13 && destination.isEmpty()){
 		valid=true;
-		destination.add(selected);
+		//destination.add(selected);
 		return true;
 	}
 	if(!destination.isEmpty()){
-		last=destination.firstElement();
+		//last=destination.firstElement();
 	}if (destination==start) {
 		System.out.println("no card movement");
 		return false;
 	}else{
-		start.add(0,selected);
-		System.out.print("card returned to start");
+		//start.add(0,selected);
+		//System.out.print("card returned to start");
 		valid=false;
 	}
 	
 	
 	if((last.suit.isRed && !selected.suit.isRed) || (!last.suit.isRed && selected.suit.isRed)){
 		if(last.value-1==selected.value){
-		destination.add(0, last);
-		destination.add(0, selected);
-		System.out.println(selected + " moved to column");
+		//destination.add(0, last);
+		//destination.add(0, selected);
+		//System.out.println(selected + " moved to column");
 		valid=true;
 		}
 	}else{
-		destination.add(0,last);
-		start.add(0,selected);
+		//destination.add(0,last);
+		//start.add(0,selected);
 		System.out.print("card returned to start");
 		valid=false;
 
@@ -57,27 +58,27 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 			return valid;
 		}
 		if (!destination.isEmpty()){
-		last =destination.firstElement();
+		//last =destination.firstElement();
 		
 		if(last.suit==selected.suit && last.value+1==selected.value ){
-			destination.add(0,last);
-			destination.add(0, selected);;
+			//destination.add(0,last);
+			//destination.add(0, selected);;
 			valid=true;
 		}else{
-			destination.add(0,last);
-			start.add(0, selected);;
+			//destination.add(0,last);
+			//start.add(0, selected);;
 			valid=false;
 			System.out.print("card returned to start");
 		}
 		}else{
 		valid=false;
-		start.add(0,selected);
+		//start.add(0,selected);
 		}
 
 	}
 
 	if (valid==false){
-		start.add(0,selected);
+		//start.add(0,selected);
 		System.out.print("card returned to start");
 	}
 
@@ -170,7 +171,30 @@ public Card draw(){
 	return c;
 }
 
-
+public boolean testWin(){
+	for(Stack<Card> f :foundations){
+		for(int i=0;i<4;i++){
+			Suit suit=Suit.Diamonds;
+			if (i==0){
+				suit=Suit.Clubs;
+			}
+			if(i==1){
+				suit=Suit.Spades;
+			}
+			if (i==2){
+				suit=Suit.Diamonds;
+			}
+			if(i==3){
+				suit=Suit.Hearts;
+			}
+		
+			for (int j=2;j<=13;j++){
+				f.add(new Card(j, suit));
+			}
+		}
+	}
+	return(this.isGameWon());
+}
 
 
 }

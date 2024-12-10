@@ -252,7 +252,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			finish.setBounds(0,0,800,800);
 			JLabel notice =new JLabel("Congrajulations you win");
 			finish.add("windisplay", notice);
-	
+		}
 
 
 
@@ -423,6 +423,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("A");
 	}
 }

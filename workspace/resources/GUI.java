@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import resources.Card.Suit;
 
 
@@ -67,25 +66,30 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   //tableau.setBorder(BorderFactory.createLineBorder(Color.red));
 	   //deck.setBorder(BorderFactory.createLineBorder(Color.red));
 
-
-	   Card back = new Card(100, Suit.Spades);
+	   Card discard = new Card(100, Suit.Spades);
+	   Card back= new Card(10,Suit.Clubs);
+	   back.hide();
 	   deck.add(back);
+	   deck.add(discard);
+	  
+	   
 	back.addMouseListener(new MouseListener() {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
+			// moves a card to the discard pile
 			selected=game.deck.peek();
 			deck.add(selected);
 			start=game.deck;
+			game.discard.add(game.deck.pop());
 			
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			// TODO Auto-generated method stub
-			selected=game.deck.peek();
-			start=game.deck;
+		//	selected=game.deck.peek();
+		//	start=game.deck;
 			
 			
 		}
@@ -93,8 +97,52 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			selected=game.deck.peek();
-			start=game.deck;
+			//selected=game.deck.peek();
+			//start=game.deck;
+			
+			
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			
+			// do nothing
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			//throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+			//also do nothing
+		}
+		
+	});
+	discard.addMouseListener(new MouseListener() {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// moves a card to the discard pile
+			selected=game.discard.peek();
+			start=game.discard;
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// does nothing because it woudl cause errors and be redundant with mouseclicked
+	//		selected=game.deck.peek();
+	//		start=game.deck;
+			
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// does nothing because it woudl cause errors and be redundant with mouseclicked
+		//	selected=game.deck.peek();
+			//start=game.deck;
 			
 			
 			//throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
@@ -114,7 +162,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			//also do nothing
 		}
 		
-	});
+	} );
 	foundation.addMouseListener(new MouseListener(){
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -209,11 +257,32 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		pile.add(card, cards.length-i);
 		//pile.add(card);
 		card.setBounds(0,50*i,100, 145);
+		
 //		card.setBounds(0, cards.length*50-50*i,100, 145);
 	}
 
 	return pile;
 	}
+	public JLayeredPane drawFoundation(Stack<Card> stackIn) {// same as draw pile jsut cards not offset like columns
+
+		Object cards[];
+	
+		cards = stackIn.toArray(); //please note we convert this stack to an array so that we can iterate through it backwards while drawing. 
+		//You’ll need to cast each element inside cards to a <Card> in order to use the methods to adjust their position
+	
+		JLayeredPane pile=new JLayeredPane();
+		//pile.setPreferredSize(new Dimension(100,800));
+		for (int i = cards.length-1; i >=0; i--) {
+			JPanel card = (Card) cards[i];
+			this.add(card);
+			pile.add(card, cards.length-i);
+			//pile.add(card);
+			card.setBounds(0,0,100, 145);//heres the difference
+	//		card.setBounds(0, cards.length*50-50*i,100, 145);
+		}
+	
+		return pile;
+		}
 
 //precondition:gui and game are both initialized
 //postcondition: display is updated
@@ -244,14 +313,25 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		foundation.removeAll();
 		for(int j=0;j<5;j++){
 			Stack<Card> part =game.foundations.get(j);
-			foundation.add(drawPile(part));
+			foundation.add(drawFoundation(part));
 	
 		}
+		deck.removeAll();
+		Card discard = new Card(100, Suit.Spades);
+		Card back= new Card(10,Suit.Clubs);
+		back.hide();
+		deck.add(back);
+		deck.add(discard);
+		deck.add(drawPile(game.discard));
+
+
+
+
 		if (game.isGameWon()){
 			JPanel finish=new JPanel(new FlowLayout());
 			finish.setBounds(0,0,800,800);
 			JLabel notice =new JLabel("Congrajulations you win");
-			finish.add("windisplay", notice);
+			finish.add("winDisplay", notice);
 		}
 
 

@@ -8,8 +8,8 @@ public class Main {
 		GUI gui = new GUI(game);
 		//game.initialize();
 		gui.update();
-		System.out.println(game.testWin());
-		gui.update();
+		//System.out.println(game.testWin());
+		//gui.update();
 			
 		
 	}

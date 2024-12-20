@@ -172,7 +172,7 @@ public Card draw(){
 }
 
 public boolean testWin(){
-	for(Stack<Card> f :foundations){
+	//for(Stack<Card> f :foundations){
 		for(int i=0;i<4;i++){
 			Suit suit=Suit.Diamonds;
 			if (i==0){
@@ -188,11 +188,11 @@ public boolean testWin(){
 				suit=Suit.Hearts;
 			}
 		
-			for (int j=2;j<=13;j++){
-				f.add(new Card(j, suit));
+			for (int j=1;j<=13;j++){
+				foundations.get(i).add(new Card(j, suit));
 			}
 		}
-	}
+	//}
 	return(this.isGameWon());
 }
 

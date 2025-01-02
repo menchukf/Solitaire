@@ -224,7 +224,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 
 	   game.initialize();
-
+		
+		for(Stack<Card> column : game.columns){
+			for(Card c :column){
+				if(column.indexOf(c)!=column.size()-1){
+					c.hide();
+				}
+			}
+		}
 	   for(Card c: game.deck){
 			c.addMouseListener(this);
 	   }
@@ -257,7 +264,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		pile.add(card, cards.length-i);
 		//pile.add(card);
 		card.setBounds(0,50*i,100, 145);
-		
+		//if((Card) cards[i].)
+		if(i==cards.length-1){
+			((Card) cards[i]).show();
+		}
 //		card.setBounds(0, cards.length*50-50*i,100, 145);
 	}
 

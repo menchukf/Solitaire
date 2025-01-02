@@ -13,8 +13,8 @@ public class Solitaire {
 	Stack<Card> deck=new Stack<>();
 	Stack<Card> discard=new Stack<>();
 	ArrayList<Stack <Card>> foundations=new ArrayList<Stack<Card>>();
-//precondition:
-//postcondition:
+//precondition: card is a valid card
+//postcondition: 
 public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
 	boolean valid=false;
 	//start.pop();
@@ -137,6 +137,7 @@ public void initialize(){
 	}
 	
 	System.out.print("game initialized");
+	
 }
 
 public Stack<Card> getDeck(){

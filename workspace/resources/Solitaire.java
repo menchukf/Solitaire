@@ -15,6 +15,7 @@ public class Solitaire {
 	ArrayList<Stack <Card>> foundations=new ArrayList<Stack<Card>>();
 //precondition: card is a valid card
 //postcondition: 
+
 public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
 	boolean valid=false;
 	//start.pop();
@@ -87,7 +88,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 
 //starts the game, displaying teh deck and the columns
 //precondition:
-//postcondition:
+//postcondition:game is initialized and ready to display
 public void initialize(){
 
 	for(int i=0;i<4;i++){
@@ -122,7 +123,7 @@ public void initialize(){
 
 	for(int i=0;i<9;i++){
 		Stack<Card> column =new Stack<Card>();
-		
+		column.add(new Card(100, Suit.Spades));
 		for(int j=0;j<i;j++){
 			Card c=deck.pop();
 			column.add(c);

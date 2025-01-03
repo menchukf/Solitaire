@@ -21,9 +21,9 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	//start.pop();
    Card last=destination.peek();
 	if(columns.contains(destination)){
-	if (selected.value==13 && destination.isEmpty()){
+	if (selected.value==13 && last.value==100){
 		valid=true;
-		//destination.add(selected);
+		destination.add(selected);
 		return true;
 	}
 	if(!destination.isEmpty()){

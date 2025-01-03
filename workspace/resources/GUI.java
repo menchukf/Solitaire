@@ -73,15 +73,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   deck.add(discard);
 	  
 	   
-	back.addMouseListener(new MouseListener() {
+	deck.addMouseListener(new MouseListener() {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// moves a card to the discard pile
-			selected=game.deck.peek();
-			deck.add(selected);
+			selected=game.deck.pop();
 			start=game.deck;
 			game.discard.add(game.deck.pop());
+			discard.add(selected);
 			
 		}
 
@@ -332,7 +332,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		back.hide();
 		deck.add(back);
 		deck.add(discard);
-		deck.add(drawPile(game.discard));
+		deck.add(drawFoundation(game.discard));
 
 
 

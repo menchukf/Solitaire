@@ -73,15 +73,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   deck.add(discard);
 	  
 	   
-	deck.addMouseListener(new MouseListener() {
+	back.addMouseListener(new MouseListener() {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// moves a card to the discard pile
-			selected=game.deck.pop();
+			selected=game.deck.peek();
 			start=game.deck;
 			game.discard.add(game.deck.pop());
-			discard.add(selected);
+			//discard.add(selected);
+			update();
 			
 		}
 
@@ -126,6 +127,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			// moves a card to the discard pile
 			selected=game.discard.peek();
 			start=game.discard;
+			update();
 			
 		}
 
@@ -185,11 +187,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					game.foundations.get(0).add(selected);
 					System.out.print("card moved to foundation");
 				}
+				//update();
 			}
 			
+			update();
 			
 			
-			//throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
 		}
 
 		@Override
@@ -263,7 +266,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		this.add(card);
 		pile.add(card, cards.length-i);
 		//pile.add(card);
-		card.setBounds(0,50*i,100, 145);
+		//card.setBounds(0,50*i,100, 145);
+		card.setBounds(0,25*i,50, 75);
 		//if((Card) cards[i].)
 		if(i==cards.length-1){
 			((Card) cards[i]).show();
@@ -306,7 +310,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		for (Stack <Card> column : game.columns){
 			i++;
 			JLayeredPane colum=drawPile(column);
-			colum.setBounds(400*i, 200, 400, 1200);
+			//colum.setBounds(400*i, 200, 400, 1200);
+			colum.setBounds(200*i, 200, 200, 1200);
 			columns.add(colum);
 			this.add(colum);
 			tableau.add(colum);
@@ -331,7 +336,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		Card back= new Card(10,Suit.Clubs);
 		back.hide();
 		deck.add(back);
-		deck.add(discard);
+		//deck.add(discard);
 		deck.add(drawFoundation(game.discard));
 
 
@@ -445,11 +450,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	}
 
 	@Override
-	//precondition:mouse is clicked on the screen 
-	//postconditionif not on a card, nothing happens, if card is already selected, does nothing, but if neither thaen the card that the mouse is pressed on is selected
+	//does nothing because it would be redundant with mopuseclicked and cause errors
 	public void mousePressed(MouseEvent arg0) {
 
-		// code copied from mouseclicked to only select, not place card
+	
 		
 		// /* 
 		// if(selected==null){//only if a card isn't already selected

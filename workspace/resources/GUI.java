@@ -274,6 +274,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		//card.setBounds(0,50*i,100, 145);
 		card.setBounds(0,25*i,50, 75);
 		//if((Card) cards[i].)
+		((Card) cards[i]).hide();
 		if(i==cards.length-1){
 			((Card) cards[i]).show();
 		}

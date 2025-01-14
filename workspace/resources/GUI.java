@@ -56,7 +56,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		testStack.add(new Card(5, Card.Suit.Clubs));
 		testStack.add(new Card(8, Card.Suit.Diamonds));
 		testStack.add(new Card(7, Card.Suit.Clubs));
-	   tableau.add(drawPile(testSftack));
+	   tableau.add(drawPile(testStack));
 	   */
 	   this.add(deck);
 	   this.add(foundation);
@@ -64,12 +64,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   
 	   //foundation.setBorder(BorderFactory.createLineBorder(Color.red));
 	   //tableau.setBorder(BorderFactory.createLineBorder(Color.red));
-	   //deck.setBorder(BorderFactory.createLineBorder(Color.red));
-
-	   Card discard = new Card(100, Suit.Spades);
+	   deck.setBorder(BorderFactory.createLineBorder(Color.green));// just because
+	   
+	   Card empty = new Card(100, Suit.Spades);// something to click on the discard pile
 	   Card back= new Card(10,Suit.Clubs);
+	   game.discard.add(empty);
+	   JLayeredPane discard=drawFoundation(game.discard);  
 	   back.hide();
 	   deck.add(back);
+	   
 	   deck.add(discard);
 	  
 	   
@@ -78,8 +81,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// moves a card to the discard pile
-			selected=game.deck.peek();
-			start=game.deck;
 			game.discard.add(game.deck.pop());
 			//discard.add(selected);
 			update();
@@ -117,6 +118,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			// TODO Auto-generated method stub
 			//throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
 			//also do nothing
+			update();//becasue why not
 		}
 		
 	});
@@ -175,17 +177,20 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					for(Stack<Card> f : game.foundations){
 						if(f.isEmpty()){
 							f.add(selected);
+							update();
 							return;
 						}
 					}
 				}else if (selected.value==game.foundations.get(0).get(0).value+1 && selected.suit==game.foundations.get(0).get(0).suit) {
 					(game.foundations.get(0)).add(selected);
+					update();
 				}
 				//moves card
 				if(game.isLegalMove(selected, start,game.foundations.get(0))){
 					start.pop();
 					game.foundations.get(0).add(selected);
 					System.out.print("card moved to foundation");
+					update();
 				}
 				//update();
 			}
@@ -332,12 +337,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	
 		}
 		deck.removeAll();
-		Card discard = new Card(100, Suit.Spades);
+		
 		Card back= new Card(10,Suit.Clubs);
+		JLayeredPane discard=drawFoundation(game.discard);  
 		back.hide();
 		deck.add(back);
-		//deck.add(discard);
-		deck.add(drawFoundation(game.discard));
+		deck.add(discard);
+		//deck.add(drawFoundation(game.discard));
 
 
 

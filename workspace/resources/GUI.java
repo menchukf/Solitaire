@@ -61,7 +61,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   this.add(deck);
 	   this.add(foundation);
 	   this.add(tableau);
-	   
+	   game.initialize();
 	   //foundation.setBorder(BorderFactory.createLineBorder(Color.red));
 	   //tableau.setBorder(BorderFactory.createLineBorder(Color.red));
 	   deck.setBorder(BorderFactory.createLineBorder(Color.green));// just because
@@ -76,7 +76,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   //deck.add(discard);
 	  
 	   //back.setBorder(BorderFactory.createLineBorder(Color.yellow));
-	
 	   deck.addMouseListener(new MouseListener() {
 
 		@Override
@@ -124,7 +123,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 		
 	});
-	
+
 	empty.addMouseListener(new MouseListener() {
 
 		@Override
@@ -236,7 +235,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 
 
-	   game.initialize();
+	   
 		
 		for(Stack<Card> column : game.columns){
 			for(Card c :column){
@@ -347,7 +346,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		deck.removeAll();
 		
 		//Card back= new Card(100,Suit.Spades);
-		JLayeredPane discard=drawPile(game.discard);  
+		JLayeredPane discard=drawFoundation(game.discard);  
 		//back.hide();
 		//deck.add(back);
 		deck.add(drawFoundation(game.deck));

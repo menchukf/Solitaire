@@ -167,10 +167,9 @@ public boolean isGameWon(){
 	return won;
 }
 
-public Card draw(){
+public void draw(){
 	Card c=deck.pop();
 	discard.add(c);
-	return c;
 }
 
 public boolean testWin(){

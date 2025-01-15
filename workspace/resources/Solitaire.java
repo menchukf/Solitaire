@@ -111,7 +111,7 @@ public void initialize(){
 		}
 	}
 	//System.out.println(deck);
-	for(int i=0;i<deck.size();i++){
+	for(int i=0;i<deck.size();i++){//shuffles the deck
 		Card c = deck.pop();
 		int index = (int) (Math.random()*deck.size());
 		deck.add(index, c);
@@ -121,7 +121,7 @@ public void initialize(){
 
 
 
-	for(int i=0;i<9;i++){
+	for(int i=0;i<9;i++){//deals the columns
 		Stack<Card> column =new Stack<Card>();
 		column.add(new Card(100, Suit.Spades));
 		for(int j=0;j<i;j++){

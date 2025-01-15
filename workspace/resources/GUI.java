@@ -31,7 +31,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
        
        // this supplies the background
        try {
-		System.out.println(getClass().toString());
+		//System.out.println(getClass().toString());
 		Image blackImg = ImageIO.read(getClass().getResource("background.jpg"));
 		setContentPane(new ImagePanel(blackImg));
 
@@ -67,23 +67,25 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   deck.setBorder(BorderFactory.createLineBorder(Color.green));// just because
 	   
 	   Card empty = new Card(100, Suit.Spades);// something to click on the discard pile
-	   Card back= new Card(10,Suit.Clubs);
+	   //Card back= new Card(100,Suit.Spades);
 	   game.discard.add(empty);
-	   JLayeredPane discard=drawFoundation(game.discard);  
-	   back.hide();
-	   deck.add(back);
-	   
-	   deck.add(discard);
+	   empty.setBorder(BorderFactory.createLineBorder(Color.green));
+	   //JLayeredPane discard=drawFoundation(game.discard);  
+	   //back.hide();
+	  // deck.add(back);
+	   //deck.add(discard);
 	  
-	   
-	back.addMouseListener(new MouseListener() {
+	   //back.setBorder(BorderFactory.createLineBorder(Color.yellow));
+	
+	   deck.addMouseListener(new MouseListener() {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// moves a card to the discard pile
-			game.discard.add(game.deck.pop());
+			game.draw();
 			//discard.add(selected);
 			update();
+			System.out.println("drawed a card");
 			
 		}
 
@@ -101,7 +103,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			// TODO Auto-generated method stub
 			//selected=game.deck.peek();
 			//start=game.deck;
-			
+			update();
 			
 			//throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
 		}
@@ -122,14 +124,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 		
 	});
-	discard.addMouseListener(new MouseListener() {
+	
+	empty.addMouseListener(new MouseListener() {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// moves a card to the discard pile
+			// selects the top card from the discard pile
 			selected=game.discard.peek();
+			selected.setBorder(BorderFactory.createLineBorder(Color.red));
 			start=game.discard;
 			update();
+			System.out.println("discard clicked");
 			
 		}
 
@@ -253,6 +258,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		System.out.print("Gui displayed");
 		revalidate();
 	   repaint();
+
     }
 
 //precondition:method is called on a stack with cards in it
@@ -274,10 +280,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		//card.setBounds(0,50*i,100, 145);
 		card.setBounds(0,25*i,50, 75);
 		//if((Card) cards[i].)
-		((Card) cards[i]).hide();
+		//((Card) cards[i]).hide();
 		if(i==cards.length-1){
 			((Card) cards[i]).show();
 		}
+
 //		card.setBounds(0, cards.length*50-50*i,100, 145);
 	}
 
@@ -339,10 +346,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 		deck.removeAll();
 		
-		Card back= new Card(10,Suit.Clubs);
-		JLayeredPane discard=drawFoundation(game.discard);  
-		back.hide();
-		deck.add(back);
+		//Card back= new Card(100,Suit.Spades);
+		JLayeredPane discard=drawPile(game.discard);  
+		//back.hide();
+		//deck.add(back);
+		deck.add(drawFoundation(game.deck));
+		for(Card c : game.deck){
+			c.hide();
+		}
 		deck.add(discard);
 		//deck.add(drawFoundation(game.discard));
 
@@ -382,16 +393,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	public void mouseClicked(MouseEvent arg0) {
 
 		Stack <Card> start=game.deck;
-		System.out.println("Card: " + arg0.getComponent());
+		//System.out.println("Card: " + arg0.getComponent());
 		if(selected==null){
 			selected=(Card) arg0.getComponent();
-			System.out.println("I selected "+selected);
+			//System.out.println("I selected "+selected);
 			selected.setBorder(BorderFactory.createLineBorder(Color.red));
 			for (Stack <Card> col : game.getColumns()){
 				 	for (Card c : col){
 				 		if(c.equals((Card)(arg0.getComponent()))){
 
-				 			System.out.print(c.toString()+"selected");
+				 			//System.out.print(c.toString()+"selected");
 
 				 		}
 				 	}
@@ -432,7 +443,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					selected=(Card) arg0.getComponent();
 					start=destination;
 					selected.setBorder(BorderFactory.createLineBorder(Color.red));
-					System.out.println("new card ("+ selected.toString()+") selected");
+					//System.out.println("new card ("+ selected.toString()+") selected");
 				}
 				
 			   }
@@ -524,6 +535,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		System.out.println("A");
+		//System.out.println("A");
 	}
 }

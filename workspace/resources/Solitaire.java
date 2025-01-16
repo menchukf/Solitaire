@@ -170,6 +170,7 @@ public boolean isGameWon(){
 public void draw(){
 	Card c=deck.pop();
 	discard.add(c);
+	System.out.println("draw function called");
 }
 
 public boolean testWin(){

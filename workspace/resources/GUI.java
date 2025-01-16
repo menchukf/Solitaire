@@ -348,7 +348,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		//Card back= new Card(100,Suit.Spades);
 		JLayeredPane discard=drawFoundation(game.discard);  
 		//back.hide();
-		//deck.add(back);
+		//game.deck.add(back);
 		deck.add(drawFoundation(game.deck));
 		for(Card c : game.deck){
 			c.hide();

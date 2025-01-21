@@ -402,7 +402,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	//precondition:click
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
-
+		System.out.println("mouse clicked in columns");
 		Stack <Card> start=game.deck;
 		//System.out.println("Card: " + arg0.getComponent());
 		if(selected==null){

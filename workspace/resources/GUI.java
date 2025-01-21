@@ -108,7 +108,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			// TODO Auto-generated method stub
 			//selected=game.deck.peek();
 			//start=game.deck;
-			update();
+			//update();
 			
 			//throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
 		}
@@ -125,7 +125,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			// TODO Auto-generated method stub
 			//throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
 			//also do nothing
-			update();//becasue why not
+			//update();//becasue why not
 		}
 		
 	});
@@ -252,15 +252,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 	   for(Card c: game.deck){
 			c.addMouseListener(this);
+			System.out.println("Card"+c.suit+"of"+c.value+"got mouselistener");
 	   }
 	   for(Stack<Card> col: game.getColumns()){
 		for(Card c :col){
 			c.addMouseListener(this);
+			System.out.println("Card"+c.suit+"of"+c.value+"got mouselistener");
 		}
 
 	   }
     	this.setVisible(true);
-		System.out.print("Gui displayed");
+		//System.out.print("Gui displayed");
 		revalidate();
 	   repaint();
 

@@ -21,12 +21,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	JPanel foundation=new JPanel(new GridLayout());
 	JPanel tableau=new JPanel(new GridLayout());
 	JPanel deck =new JPanel(new GridLayout());
+	JPanel discard=new JPanel(new GridLayout());
 	ArrayList<JLayeredPane> columns =new ArrayList<>();
    public GUI(Solitaire game){
 	   this.game=game;
         //Create and set up the window.
        setTitle("Solitaire");
-       setSize(500,500);
+       setSize(800,600);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
        // this supplies the background
@@ -46,9 +47,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	   
 	   foundation.setBounds(00,000,600,150);
-	   deck.setBounds(700,000,300,150);
+	   deck.setBounds(700,000,150,150);
+	   discard.setBounds(850,0,150,150);
 	   tableau.setBounds(00,200,1000,800);
-	/* 
+	   
 	  Stack <Card> testStack=new Stack<Card>();
 
 		testStack.add(new Card(3, Card.Suit.Diamonds));
@@ -56,23 +58,27 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		testStack.add(new Card(5, Card.Suit.Clubs));
 		testStack.add(new Card(8, Card.Suit.Diamonds));
 		testStack.add(new Card(7, Card.Suit.Clubs));
-	   tableau.add(drawPile(testStack));
-	   */
+	   //tableau.add(drawPile(testStack));
+	   for(Card c:testStack){
+		deck.add(c);
+	   }
 	   this.add(deck);
 	   this.add(foundation);
 	   this.add(tableau);
+	   this.add(discard);
 	   game.initialize();
 	   //foundation.setBorder(BorderFactory.createLineBorder(Color.red));
 	   //tableau.setBorder(BorderFactory.createLineBorder(Color.red));
-	   deck.setBorder(BorderFactory.createLineBorder(Color.green));// just because
+	   deck.setBorder(BorderFactory.createLineBorder(Color.blue));// just because
 	   
 	   Card empty = new Card(100, Suit.Spades);// something to click on the discard pile
-	   //Card back= new Card(100,Suit.Spades);
+	   Card back= new Card(100,Suit.Spades);
 	   game.discard.add(empty);
-	   empty.setBorder(BorderFactory.createLineBorder(Color.green));
+	   discard.setBorder(BorderFactory.createLineBorder(Color.green));
 	   //JLayeredPane discard=drawFoundation(game.discard);  
-	   //back.hide();
-	  // deck.add(back);
+	   back.hide();
+	   empty.show();
+		deck.add(back);
 	   //deck.add(discard);
 	  
 	   //back.setBorder(BorderFactory.createLineBorder(Color.yellow));
@@ -84,7 +90,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			game.draw();
 			//discard.add(selected);
 			update();
-			System.out.println("drawed a card");
+			//System.out.println("drawed a card");
 			
 		}
 
@@ -124,7 +130,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		
 	});
 
-	empty.addMouseListener(new MouseListener() {
+	discard.addMouseListener(new MouseListener() {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -344,16 +350,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	
 		}
 		deck.removeAll();
-		
+		discard.removeAll();
 		//Card back= new Card(100,Suit.Spades);
-		JLayeredPane discard=drawFoundation(game.discard);  
+		JLayeredPane discardstack=drawFoundation(game.discard);  
+		discard.add(discardstack);
+		for(Card c: game.discard){
+			c.show();
+		}
 		//back.hide();
 		//game.deck.add(back);
 		deck.add(drawFoundation(game.deck));
 		for(Card c : game.deck){
 			c.hide();
 		}
-		deck.add(discard);
+		
+		//System.out.print(game.discard.peek());
+		//deck.add(discard);
 		//deck.add(drawFoundation(game.discard));
 
 
@@ -417,7 +429,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 */ 
 				}else{
-					Stack<Card> destination=game.discard;
+					Stack<Card> destination=null;
 			   Card d=(Card)arg0.getComponent();
 	 		   for(Stack<Card> col: game.getColumns()){
 	 			for(Card c :col){

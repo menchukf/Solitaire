@@ -29,23 +29,19 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		destination.add(selected);
 		System.out.println("kingmoved");
 
-	}else{
-		//start.add(0,selected);
-		//System.out.print("card returned to start");
-		valid=false;
-	}
-	
-	
+	}	
 	if((last.suit.isRed && !selected.suit.isRed) || (!last.suit.isRed && selected.suit.isRed)){
 		System.out.println("column check1 passed");
+		System.out.println("last: "+last.value+" selected: "+selected.value);
 		if(last.value-1==selected.value){
 			System.out.println("column check2 passed");
+			valid=true;
 		//destination.add(0, last);
 		//destination.add(0, selected);
 		//System.out.println(selected + " moved to column");
+		System.out.println("move is valid:"+valid);
 		start.remove(selected);
 		destination.add(selected);
-		valid=true;
 		}
 	}else{
 		//destination.add(0,last);
@@ -80,7 +76,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	}else if(destination==discard){
 		//valid=false;
 	}
-	System.out.println("move is valid:"+valid);
+
 	return valid;
 }
 

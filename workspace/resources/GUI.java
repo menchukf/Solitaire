@@ -494,7 +494,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			}
 			if(destination!=null){
 	 		   if(game.isLegalMove(selected,destination ,start)){
-					start.pop();
+					start.remove(selected);
 					destination.add(selected);
 					//System.out.println("card moved in columns");
 					selected.setBorder(null);
@@ -508,7 +508,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			   }
 				
 			   //System.out.println("mouse clicked");
-			   this.update();
+			   //this.update();
 			update();
 			}
 	

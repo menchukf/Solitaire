@@ -87,18 +87,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// moves a card to the discard pile
-			game.draw();
-
-			update();
-
 			if(game.deck.isEmpty()){
 				for(Card c:game.discard){
 					game.deck.add(c);
 					game.discard.remove(c);
 				}
 			}
-			//System.out.println("drawed a card");
+			game.draw();
+
 			
+			selected=game.discard.peek();
+			selected.setBorder(BorderFactory.createLineBorder(Color.red));
+			start=game.discard;
+
+			
+			//System.out.println("drawed a card");
+			update();
 		}
 
 		@Override
@@ -458,7 +462,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					start=game.deck;
 				}
 				if(d.equals(selected)){
-					destination=game.deck;
+					selected.setBorder(null);
+					selected=d;
+					selected.setBorder(BorderFactory.createLineBorder(Color.red));
 				}
 			}
 			if(destination!=null){

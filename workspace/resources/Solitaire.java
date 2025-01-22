@@ -22,14 +22,15 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
     Card last=destination.peek();
 	
 	if(columns.contains(destination)){
+		System.out.println("move in columns");
 	if (selected.value==13 && last.value==100){
 		valid=true;
 		destination.add(selected);
-		return valid;
+
 	}
 	if (destination==start) {
 		System.out.println("no card movement");
-		return false;
+		valid=false;
 	}else{
 		//start.add(0,selected);
 		//System.out.print("card returned to start");
@@ -58,7 +59,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		if (selected.value==1 && destination.isEmpty()){
 			valid=true;
 			start.remove(selected);
-			return valid;
+			
 		}
 		if (!destination.isEmpty()){
 		//last =destination.firstElement();
@@ -82,7 +83,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	}if(destination==discard){
 		valid=false;
 	}
-
+	System.out.println("move is valid:"+valid);
 	return valid;
 }
 

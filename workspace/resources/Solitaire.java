@@ -19,8 +19,12 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	boolean valid=false;
 	//start.pop();
 	System.out.println("legalmove called");
+	if(destination==null){
+		return false;
+	}
+	System.out.println("destination:"+destination);
     Card last=destination.peek();
-	
+	System.out.println("last= "+last.value);
 	if(columns.contains(destination)){
 		System.out.println("move in columns");
 	if (selected.value==13 && last.value==100){
@@ -64,7 +68,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		
 		if(last.suit==selected.suit && last.value+1==selected.value ){
 			//destination.add(0,last);
-			destination.add(0,selected);
+			destination.add(selected);
 			start.remove(selected);
 			valid=true;
 		}else{

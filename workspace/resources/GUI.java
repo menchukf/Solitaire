@@ -468,7 +468,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	 				/*if (c.equals(selected)){
 	 					start=col;
 	 				}*/
-					 if (c.equals(d)){
+					 if (c==d){
 						destination=col;
 					}
 	 			}
@@ -476,12 +476,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 				
 			for (Stack <Card> part : game.foundations){
 				for (Card c : part){
-					if(c.equals((Card)(arg0.getComponent()))){
+					if(c==selected){
 
 						//System.out.print(c.toString()+"selected");
 					   start=part;
 					}
-					if(d.equals((Card)(arg0.getComponent()))){
+					if(c==d){
 
 						//System.out.print(c.toString()+"selected");
 					   destination=part;
@@ -489,10 +489,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 				}
 	   }
 			for(Card c:game.deck){
-				if (c.equals(selected)){
+				if (c==selected){
 					start=game.deck;
 				}
-				if(d.equals(selected)){
+				if(d==selected){
 					selected.setBorder(null);
 					selected=d;
 					selected.setBorder(BorderFactory.createLineBorder(Color.red));

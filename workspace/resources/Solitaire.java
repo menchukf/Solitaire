@@ -40,8 +40,9 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		//destination.add(0, selected);
 		//System.out.println(selected + " moved to column");
 		System.out.println("move is valid: "+valid);
+		System.out.println("selected removed: "+selected.value+"from "+start);
 		start.remove(selected);
-		System.out.println("selected removed: "+selected.value);
+		
 		destination.add(selected);
 		}
 	}else{
@@ -53,7 +54,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	}
 
 	}else if(foundations.contains(destination)){
-		if (selected.value==1 && destination.isEmpty()){
+		if (selected.value==1 && last.value==100){
 			valid=true;
 			start.remove(selected);
 			destination.add(selected);

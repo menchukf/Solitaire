@@ -193,6 +193,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 		
 	} );
+	for(Stack<Card> part: game.foundations){
+		Card c=new Card(100, Suit.Spades);
+		part.add(c);
+	
 	foundation.addMouseListener(new MouseListener(){
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -252,7 +256,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 		
 	});
-
+   }
 
 
 	   
@@ -298,8 +302,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		this.add(card);
 		pile.add(card, cards.length-i);
 		//pile.add(card);
-		//card.setBounds(0,50*i,100, 145);
-		card.setBounds(0,25*i,50, 75);
+		card.setBounds(0,50*i,100, 145);
+		//card.setBounds(0,25*i,50, 75);//chromebook size
 		//if((Card) cards[i].)
 		//((Card) cards[i]).hide();
 		if(i==cards.length-1){
@@ -461,9 +465,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			   Card d=(Card)arg0.getComponent();
 	 		   for(Stack<Card> col: game.getColumns()){
 	 			for(Card c :col){
-	 				if (c.equals(selected)){
+	 				/*if (c.equals(selected)){
 	 					start=col;
-	 				}
+	 				}*/
 					 if (c.equals(d)){
 						destination=col;
 					}

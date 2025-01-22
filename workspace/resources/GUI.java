@@ -88,8 +88,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		public void mouseClicked(MouseEvent e) {
 			// moves a card to the discard pile
 			game.draw();
-			//discard.add(selected);
+
 			update();
+
+			if(game.deck.isEmpty()){
+				for(Card c:game.discard){
+					game.deck.add(c);
+					game.discard.remove(c);
+				}
+			}
 			//System.out.println("drawed a card");
 			
 		}
@@ -138,8 +145,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 			selected=game.discard.peek();
 			selected.setBorder(BorderFactory.createLineBorder(Color.red));
 			start=game.discard;
+			
 			update();
 			System.out.println("discard clicked");
+			System.out.println("selected is"+selected);
 			
 		}
 
@@ -252,12 +261,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 	   for(Card c: game.deck){
 			c.addMouseListener(this);
-			System.out.println("Card"+c.suit+"of"+c.value+"got mouselistener");
+			//System.out.println("Card"+c.suit+"of"+c.value+"got mouselistener");
 	   }
 	   for(Stack<Card> col: game.getColumns()){
 		for(Card c :col){
 			c.addMouseListener(this);
-			System.out.println("Card"+c.suit+"of"+c.value+"got mouselistener");
+			//System.out.println("Card"+c.suit+"of"+c.value+"got mouselistener");
 		}
 
 	   }
@@ -356,14 +365,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		//Card back= new Card(100,Suit.Spades);
 		JLayeredPane discardstack=drawFoundation(game.discard);  
 		discard.add(discardstack);
-		for(Card c: game.discard){
-			c.show();
-		}
+		
 		//back.hide();
 		//game.deck.add(back);
 		deck.add(drawFoundation(game.deck));
 		for(Card c : game.deck){
 			c.hide();
+		}
+		for(Card c: game.discard){
+			c.show();
 		}
 		
 		//System.out.print(game.discard.peek());
@@ -416,7 +426,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 				 		if(c.equals((Card)(arg0.getComponent()))){
 
 				 			//System.out.print(c.toString()+"selected");
-
+							start=col;
 				 		}
 				 	}
 				}
@@ -443,9 +453,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					}
 	 			}
 			}
-
-				//System.out.println(start);
-				//System.out.println(destination);
+			for(Card c:game.deck){
+				if (c.equals(selected)){
+					start=game.deck;
+				}
+				if(d.equals(selected)){
+					destination=game.deck;
+				}
+			}
+			if(destination!=null){
 	 		   if(game.isLegalMove(selected,destination ,start)){
 					start.pop();
 					destination.add(selected);
@@ -458,7 +474,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					selected.setBorder(BorderFactory.createLineBorder(Color.red));
 					//System.out.println("new card ("+ selected.toString()+") selected");
 				}
-				
+			}
 			   }
 				
 			   System.out.println("mouse clicked");

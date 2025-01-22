@@ -13,13 +13,14 @@ public class Solitaire {
 	Stack<Card> deck=new Stack<>();
 	Stack<Card> discard=new Stack<>();
 	ArrayList<Stack <Card>> foundations=new ArrayList<Stack<Card>>();
-//precondition: card is a valid card
-//postcondition: 
-
+//precondition: all paramaters are non-null
+//postcondition: returns false if move is illegal, returns true and makes move if move is legal
 public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
 	boolean valid=false;
 	//start.pop();
-   Card last=destination.peek();
+	System.out.println("legalmove called");
+    Card last=destination.peek();
+	
 	if(columns.contains(destination)){
 	if (selected.value==13 && last.value==100){
 		valid=true;
@@ -48,7 +49,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	}else{
 		//destination.add(0,last);
 		//start.add(0,selected);
-		System.out.print("card returned to start");
+		//System.out.print("card returned to start");
 		valid=false;
 
 	}
@@ -56,6 +57,7 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	}else if(foundations.contains(destination)){
 		if (selected.value==1 && destination.isEmpty()){
 			valid=true;
+			start.remove(selected);
 			return valid;
 		}
 		if (!destination.isEmpty()){
@@ -63,24 +65,22 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		
 		if(last.suit==selected.suit && last.value+1==selected.value ){
 			destination.add(0,last);
-			destination.add(0, selected);;
+			destination.add(0, selected);
+			start.remove(selected);
 			valid=true;
 		}else{
 			//destination.add(0,last);
 			//start.add(0, selected);;
 			valid=false;
-			System.out.print("card returned to start");
+			//System.out.print("card returned to start");
 		}
 		}else{
 		valid=false;
 		//start.add(0,selected);
 		}
 
-	}
-
-	if (valid==false){
-		//start.add(0,selected);
-		System.out.print("card returned to start");
+	}if(destination==discard){
+		valid=false;
 	}
 
 	return valid;

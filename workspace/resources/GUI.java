@@ -213,7 +213,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					}
 				}
 				//moves card
-				if(game.isLegalMove(selected, start,game.foundations.get(0))){
+				if(game.isLegalMove(selected,game.foundations.get(0).get(0))){
 					//start.pop();
 					selected.setBorder(null);
 					game.foundations.get(0).add(selected);
@@ -302,8 +302,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		this.add(card);
 		pile.add(card, cards.length-i);
 		//pile.add(card);
-		card.setBounds(0,50*i,100, 145);
-		//card.setBounds(0,25*i,50, 75);//chromebook size
+		//card.setBounds(0,50*i,100, 145);
+		card.setBounds(0,25*i,50, 75);//chromebook size
 		//if((Card) cards[i].)
 		//((Card) cards[i]).hide();
 		if(i==cards.length-1){
@@ -424,7 +424,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
 
-		Stack <Card> start=game.deck;
+		start=game.deck;
 		//System.out.println("Card: " + arg0.getComponent());
 		if(selected==null){
 			selected=(Card) arg0.getComponent();
@@ -461,7 +461,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 */ 
 				}else{
-					System.out.println("a card is already selected and the next one is also clicked start is "+selected+" and destination is ");
+					System.out.println("a card is already selected and the next one is also clicked start is "+selected+" and destination is "+arg0.getComponent());
 					Stack<Card> destination=null;
 			   Card d=(Card)arg0.getComponent();
 

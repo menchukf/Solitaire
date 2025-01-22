@@ -435,6 +435,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 				 		}
 				 	}
 			}
+		/* 
 			for (Stack <Card> part : game.foundations){
 				for (Card c : part){
 					if(c.equals((Card)(arg0.getComponent()))){
@@ -444,6 +445,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					}
 				}
 	   }
+	   */
 
 		
 /* 
@@ -498,6 +500,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					destination.add(selected);
 					//System.out.println("card moved in columns");
 					selected.setBorder(null);
+					update();
 				}else{
 					selected.setBorder(null);
 					selected=(Card) arg0.getComponent();

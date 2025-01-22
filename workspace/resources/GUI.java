@@ -88,10 +88,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		public void mouseClicked(MouseEvent e) {
 			// moves a card to the discard pile
 			if(game.deck.isEmpty()){
-				for(Card c:game.discard){
+				for(int i=0;i<game.discard.size()-1;i++){
+					Card c=game.discard.get(i);
 					game.deck.add(c);
 					game.discard.remove(c);
 				}
+				System.out.println("deck refilled");
+				update();
 			}
 			game.draw();
 
@@ -204,13 +207,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 							return;
 						}
 					}
-				}else if (selected.value==game.foundations.get(0).get(0).value+1 && selected.suit==game.foundations.get(0).get(0).suit) {
-					(game.foundations.get(0)).add(selected);
-					update();
 				}
 				//moves card
 				if(game.isLegalMove(selected, start,game.foundations.get(0))){
-					start.pop();
+					//start.pop();
+					selected.setBorder(null);
 					game.foundations.get(0).add(selected);
 					System.out.print("card moved to foundation");
 					update();
@@ -418,7 +419,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	//precondition:click
 //postcondition:selescts card for movement
 	public void mouseClicked(MouseEvent arg0) {
-		System.out.println("mouse clicked in columns");
+
 		Stack <Card> start=game.deck;
 		//System.out.println("Card: " + arg0.getComponent());
 		if(selected==null){
@@ -433,7 +434,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 							start=col;
 				 		}
 				 	}
+			}
+			for (Stack <Card> part : game.foundations){
+				for (Card c : part){
+					if(c.equals((Card)(arg0.getComponent()))){
+
+						//System.out.print(c.toString()+"selected");
+					   start=part;
+					}
 				}
+	   }
 
 		
 /* 
@@ -456,7 +466,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 						destination=col;
 					}
 	 			}
-			}
+				}
+				
+			for (Stack <Card> part : game.foundations){
+				for (Card c : part){
+					if(c.equals((Card)(arg0.getComponent()))){
+
+						//System.out.print(c.toString()+"selected");
+					   start=part;
+					}
+					if(d.equals((Card)(arg0.getComponent()))){
+
+						//System.out.print(c.toString()+"selected");
+					   destination=part;
+					}
+				}
+	   }
 			for(Card c:game.deck){
 				if (c.equals(selected)){
 					start=game.deck;
@@ -471,21 +496,20 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	 		   if(game.isLegalMove(selected,destination ,start)){
 					start.pop();
 					destination.add(selected);
-					System.out.println("card moved in columns");
+					//System.out.println("card moved in columns");
 					selected.setBorder(null);
 				}else{
 					selected.setBorder(null);
 					selected=(Card) arg0.getComponent();
-					start=destination;
 					selected.setBorder(BorderFactory.createLineBorder(Color.red));
 					//System.out.println("new card ("+ selected.toString()+") selected");
 				}
 			}
 			   }
 				
-			   System.out.println("mouse clicked");
+			   //System.out.println("mouse clicked");
 			   this.update();
-			
+			update();
 			}
 	
 

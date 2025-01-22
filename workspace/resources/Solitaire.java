@@ -22,15 +22,13 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
     Card last=destination.peek();
 	
 	if(columns.contains(destination)){
-		System.out.println("move in columns");
+		//System.out.println("move in columns");
 	if (selected.value==13 && last.value==100){
 		valid=true;
+		start.remove(selected);
 		destination.add(selected);
+		System.out.println("kingmoved");
 
-	}
-	if (destination==start) {
-		System.out.println("no card movement");
-		valid=false;
 	}else{
 		//start.add(0,selected);
 		//System.out.print("card returned to start");
@@ -39,7 +37,9 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 	
 	
 	if((last.suit.isRed && !selected.suit.isRed) || (!last.suit.isRed && selected.suit.isRed)){
+		System.out.println("column check1 passed");
 		if(last.value-1==selected.value){
+			System.out.println("column check2 passed");
 		//destination.add(0, last);
 		//destination.add(0, selected);
 		//System.out.println(selected + " moved to column");
@@ -59,14 +59,14 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 		if (selected.value==1 && destination.isEmpty()){
 			valid=true;
 			start.remove(selected);
-			
+			destination.add(selected);
 		}
 		if (!destination.isEmpty()){
 		//last =destination.firstElement();
 		
 		if(last.suit==selected.suit && last.value+1==selected.value ){
-			destination.add(0,last);
-			destination.add(0, selected);
+			//destination.add(0,last);
+			destination.add(selected);
 			start.remove(selected);
 			valid=true;
 		}else{
@@ -75,13 +75,10 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 			valid=false;
 			//System.out.print("card returned to start");
 		}
-		}else{
-		valid=false;
-		//start.add(0,selected);
 		}
 
-	}if(destination==discard){
-		valid=false;
+	}else if(destination==discard){
+		//valid=false;
 	}
 	System.out.println("move is valid:"+valid);
 	return valid;
@@ -158,6 +155,8 @@ public boolean isGameWon(){
 			}
 			if(f.lastIndexOf(f.peek())==13){
 				won=true;
+			}else{
+				won=false;
 			}	
 		} else {
 			won=false;

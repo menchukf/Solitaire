@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Stack;
 import javax.management.monitor.GaugeMonitor;
+import javax.swing.BorderFactory;
 
 import resources.Card.Suit;
 	//the part of your program that's in charge of game rules goes here.
@@ -15,18 +16,56 @@ public class Solitaire {
 	ArrayList<Stack <Card>> foundations=new ArrayList<Stack<Card>>();
 //precondition: all paramaters are non-null
 //postcondition: returns false if move is illegal, returns true and makes move if move is legal
-public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> start){
+public boolean isLegalMove (Card selected,Card d){
 	boolean valid=false;
+	Stack<Card> start=null;
+	Stack<Card> destination=null;
+	for(Stack<Card> col: this.getColumns()){
+	 			for(Card c :col){
+	 				if (c.equals(selected)){
+	 					start=col;
+	 				}
+					 if (c==d){
+						destination=col;
+					}
+	 			}
+				}
+				
+			for (Stack <Card> part : this.foundations){
+				for (Card c : part){
+					if(c==selected){
+
+						//System.out.print(c.toString()+"selected");
+					   start=part;
+					}
+					if(c==d){
+
+						//System.out.print(c.toString()+"selected");
+					   destination=part;
+					}
+				}
+	   }
+			for(Card c:this.deck){
+				if (c==selected){
+					start=this.deck;
+				}
+				if(d==selected){
+					//selected.setBorder(null);
+					return false;
+					
+					//selected.setBorder(BorderFactory.createLineBorder(Color.red));
+				}
+			}
 	//start.pop();
 	System.out.println("legalmove called");
 	if(destination==null){
 		return false;
 	}
-	System.out.println("destination:"+destination);
+	//System.out.println("destination:"+destination);
     Card last=destination.peek();
-	System.out.println("last= "+last.value);
+	System.out.println("last= "+last.value+"=d"+d.value);
 	if(columns.contains(destination)){
-		System.out.println("move in columns");
+		//System.out.println("move in columns");
 	if (selected.value==13 && last.value==100){
 		valid=true;
 		start.remove(selected);
@@ -35,15 +74,15 @@ public boolean isLegalMove (Card selected,Stack<Card> destination,Stack<Card> st
 
 	}	
 	if((last.suit.isRed && !selected.suit.isRed) || (!last.suit.isRed && selected.suit.isRed)){
-		System.out.println("column check1 passed");
-		System.out.println("last: "+last.value+" selected: "+selected.value);
+		//System.out.println("column check1 passed");
+		//System.out.println("last: "+last.value+" selected: "+selected.value);
 		if(last.value-1==selected.value){
-			System.out.println("column check2 passed");
+			//System.out.println("column check2 passed");
 			valid=true;
 		//destination.add(0, last);
 		//destination.add(0, selected);
 		//System.out.println(selected + " moved to column");
-		System.out.println("move is valid: "+valid);
+		//System.out.println("move is valid");
 		System.out.println("selected removed: "+selected.value+"from "+start);
 		start.remove(selected);
 		

@@ -461,45 +461,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 */ 
 				}else{
+					System.out.println("a card is already selected and the next one is also clicked start is "+selected+" and destination is ");
 					Stack<Card> destination=null;
 			   Card d=(Card)arg0.getComponent();
-	 		   for(Stack<Card> col: game.getColumns()){
-	 			for(Card c :col){
-	 				/*if (c.equals(selected)){
-	 					start=col;
-	 				}*/
-					 if (c==d){
-						destination=col;
-					}
-	 			}
-				}
-				
-			for (Stack <Card> part : game.foundations){
-				for (Card c : part){
-					if(c==selected){
 
-						//System.out.print(c.toString()+"selected");
-					   start=part;
-					}
-					if(c==d){
-
-						//System.out.print(c.toString()+"selected");
-					   destination=part;
-					}
-				}
-	   }
-			for(Card c:game.deck){
-				if (c==selected){
-					start=game.deck;
-				}
-				if(d==selected){
-					selected.setBorder(null);
-					selected=d;
-					selected.setBorder(BorderFactory.createLineBorder(Color.red));
-				}
-			}
 			if(destination!=null){
-	 		   if(game.isLegalMove(selected,destination ,start)){
+	 		   if(game.isLegalMove(selected,d)){
 					start.remove(selected);
 					destination.add(selected);
 					//System.out.println("card moved in columns");

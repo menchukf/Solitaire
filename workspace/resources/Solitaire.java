@@ -1,55 +1,51 @@
 package resources;
-import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Stack;
-import javax.management.monitor.GaugeMonitor;
-import javax.swing.BorderFactory;
-
 import resources.Card.Suit;
 	//the part of your program that's in charge of game rules goes here.
 public class Solitaire {
 	ArrayList<Stack <Card>> columns=new ArrayList<Stack <Card>>();
-	Stack<Card> deck=new Stack<>();
+	Stack<Card> deck=new Stack<Card>();
 	Stack<Card> discard=new Stack<>();
 	ArrayList<Stack <Card>> foundations=new ArrayList<Stack<Card>>();
 //precondition: all paramaters are non-null
 //postcondition: returns false if move is illegal, returns true and makes move if move is legal
-public boolean isLegalMove (Card selected,Card d){
+public boolean isLegalMove (Card selected,Card d){//d for destination
 	boolean valid=false;
 	Stack<Card> start=null;
 	Stack<Card> destination=null;
-	for(Stack<Card> col: this.getColumns()){
-	 			for(Card c :col){
-	 				if (c.equals(selected)){
-	 					start=col;
-	 				}
-					 if (c==d){
-						destination=col;
-					}
-	 			}
-				}
+	for(Stack<Card> col: columns){
+	 	for(Card c :col){
+	 		if (c.equals(selected)){
+	 			start=col;
+				//System.out.println("start found");
+	 		}
+			if (c.equals(d)){
+				destination=col;
+				//System.out.println("end found");
+			}
+	 	}
+
+	}
 				
-			for (Stack <Card> part : this.foundations){
-				for (Card c : part){
-					if(c==selected){
+		for (Stack <Card> part : this.foundations){
+			for (Card c : part){
+				if(c.equals(selected)){
 
 						//System.out.print(c.toString()+"selected");
-					   start=part;
-					}
-					if(c==d){
-
-						//System.out.print(c.toString()+"selected");
-					   destination=part;
-					}
+				   start=part;
 				}
+				if(c.equals(d)){
+						//System.out.print(c.toString()+"selected");
+				   destination=part;
+				}
+			}
 	   }
-			for(Card c:this.deck){
-				if (c==selected){
-					start=this.deck;
+			for(Card c:deck){
+				if (c.equals(selected)){
+					start=deck;
 				}
-				if(d==selected){
+				if(selected.equals(d)){
 					//selected.setBorder(null);
 					return false;
 					
@@ -57,20 +53,31 @@ public boolean isLegalMove (Card selected,Card d){
 				}
 			}
 	//start.pop();
-	System.out.println("legalmove called");
-	if(destination==null){
+	//System.out.println("legalmove called");
+	if(destination==null ){
+		System.out.println("not found");
 		return false;
 	}
+	if(start==null){
+		start=discard;
+	}
 	//System.out.println("destination:"+destination);
+	
+	//System.out.println("start:"+start);
     Card last=destination.peek();
-	System.out.println("last= "+last.value+"=d"+d.value);
+	//System.out.println("last= "+last.value+"=d="+d.value);
+	/*if(last.value==100){
+		valid=true;
+		start.remove(selected);
+		destination.add(selected);
+	}*/
 	if(columns.contains(destination)){
 		//System.out.println("move in columns");
 	if (selected.value==13 && last.value==100){
 		valid=true;
 		start.remove(selected);
 		destination.add(selected);
-		System.out.println("kingmoved");
+		//System.out.println("kingmoved");
 
 	}	
 	if((last.suit.isRed && !selected.suit.isRed) || (!last.suit.isRed && selected.suit.isRed)){
@@ -83,7 +90,7 @@ public boolean isLegalMove (Card selected,Card d){
 		//destination.add(0, selected);
 		//System.out.println(selected + " moved to column");
 		//System.out.println("move is valid");
-		System.out.println("selected removed: "+selected.value+"from "+start);
+		//System.out.println("selected removed: "+selected.value+"from "+start);
 		start.remove(selected);
 		
 		destination.add(selected);
@@ -97,31 +104,26 @@ public boolean isLegalMove (Card selected,Card d){
 	}
 
 	}else if(foundations.contains(destination)){
+		System.out.println("reached foundations");
 		if (selected.value==1 && last.value==100){
 			valid=true;
 			start.remove(selected);
 			destination.add(selected);
 		}
-		if (!destination.isEmpty()){
-		//last =destination.firstElement();
-		
 		if(last.suit==selected.suit && last.value+1==selected.value ){
 			//destination.add(0,last);
 			destination.add(selected);
 			start.remove(selected);
 			valid=true;
-		}else{
-			//destination.add(0,last);
-			//start.add(0, selected);;
-			valid=false;
-			//System.out.print("card returned to start");
 		}
-		}
+		
 
 	}else if(destination==discard){
-		//valid=false;
+		valid=false;
 	}
-
+	//if(start==discard && valid==true){
+	//	start.remove(selected);
+	//}
 	return valid;
 }
 
@@ -176,7 +178,7 @@ public void initialize(){
 
 	}
 	
-	System.out.print("game initialized");
+	//System.out.print("game initialized");
 	
 }
 
@@ -211,6 +213,9 @@ public boolean isGameWon(){
 public void draw(){
 	Card c=deck.pop();
 	discard.add(c);
+	if(deck.contains(c)){
+		deck.remove(c);
+	}
 	System.out.println("draw function called");
 }
 

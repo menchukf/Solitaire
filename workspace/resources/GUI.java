@@ -51,7 +51,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   discard.setBounds(850,0,150,150);
 	   tableau.setBounds(00,200,1000,800);
 	   
-	  Stack <Card> testStack=new Stack<Card>();
+	  /*Stack <Card> testStack=new Stack<Card>();
 
 		testStack.add(new Card(3, Card.Suit.Diamonds));
 		testStack.add(new Card(4, Card.Suit.Diamonds));
@@ -62,6 +62,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   for(Card c:testStack){
 		deck.add(c);
 	   }
+		*/
 	   this.add(deck);
 	   this.add(foundation);
 	   this.add(tableau);
@@ -93,6 +94,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					game.deck.add(c);
 					game.discard.remove(c);
 				}
+				game.discard.clear();
 				System.out.println("deck refilled");
 				update();
 			}
@@ -143,84 +145,48 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 		
 	});
-
-	discard.addMouseListener(new MouseListener() {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// selects the top card from the discard pile
-			selected=game.discard.peek();
-			selected.setBorder(BorderFactory.createLineBorder(Color.red));
-			start=game.discard;
-			
-			update();
-			System.out.println("discard clicked");
-			System.out.println("selected is"+selected);
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// does nothing because it woudl cause errors and be redundant with mouseclicked
-	//		selected=game.deck.peek();
-	//		start=game.deck;
-			
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// does nothing because it woudl cause errors and be redundant with mouseclicked
-		//	selected=game.deck.peek();
-			//start=game.deck;
-			
-			
-			//throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			// do nothing
-			//throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			//throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
-			//also do nothing
-		}
-		
-	} );
 	for(Stack<Card> part: game.foundations){
 		Card c=new Card(100, Suit.Spades);
 		part.add(c);
 	
 	foundation.addMouseListener(new MouseListener(){
+		
+		//precondition:
+		//postcondition moves card to foundations if it is an ace or if it can move to foundation
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// moves card to foundations if it is an ace or if it can move to foundation
 			
 			if (selected!= null){
 				if(selected.value==1){
 					for(Stack<Card> f : game.foundations){
-						if(f.isEmpty()){
+						if(f.get(f.size()-1).value==100&&f.get(0).value!=1){
 							f.add(selected);
+							for(Stack<Card>col :game.columns){
+								if(col.contains(selected)){
+									col.remove(selected);
+								}
+							}
 							update();
 							return;
 						}
 					}
 				}
 				//moves card
-				if(game.isLegalMove(selected,game.foundations.get(0).get(0))){
+				for(Stack<Card> f: game.foundations){
+					if(f.get(0).suit==selected.suit){
+
+				
+				
+				if(game.isLegalMove(selected,f.get(0))){
 					//start.pop();
 					selected.setBorder(null);
-					game.foundations.get(0).add(selected);
+					//game.foundations.get(0).add(selected);
 					System.out.print("card moved to foundation");
 					update();
 				}
+			}
 				//update();
+		}
 			}
 			
 			update();
@@ -302,8 +268,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		this.add(card);
 		pile.add(card, cards.length-i);
 		//pile.add(card);
-		//card.setBounds(0,50*i,100, 145);
-		card.setBounds(0,25*i,50, 75);//chromebook size
+		//card.setBounds(0,15*i,100, 145);
+		card.setBounds(0,10*i,50, 75);//chromebook size
 		//if((Card) cards[i].)
 		//((Card) cards[i]).hide();
 		if(i==cards.length-1){
@@ -339,6 +305,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //precondition:gui and game are both initialized
 //postcondition: display is updated
 	public void update() {
+		//System.out.println("update called");
 		for(int i=0;i<columns.size();i++){
 			columns.remove(i);
 			i--;
@@ -364,7 +331,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		
 		//System.out.print("columns displayed");
 		foundation.removeAll();
-		for(int j=0;j<5;j++){
+		for(int j=0;j<4;j++){
 			Stack<Card> part =game.foundations.get(j);
 			foundation.add(drawFoundation(part));
 	
@@ -408,7 +375,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 //postcondition:
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		System.out.println("Mouse dragged");
+		//System.out.println("Mouse dragged");
 	}
 
 	@Override
@@ -461,14 +428,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 		}
 */ 
 				}else{
-					System.out.println("a card is already selected and the next one is also clicked start is "+selected+" and destination is "+arg0.getComponent());
-					Stack<Card> destination=null;
+					//System.out.println("a card is already selected and the next one is also clicked start is "+selected+" and destination is "+arg0.getComponent());
+					//Stack<Card> destination=null;
 			   Card d=(Card)arg0.getComponent();
-
-			if(destination!=null){
 	 		   if(game.isLegalMove(selected,d)){
-					start.remove(selected);
-					destination.add(selected);
+					//start.remove(selected);
+					//destination.add(selected); happens in islegalmove function
 					//System.out.println("card moved in columns");
 					selected.setBorder(null);
 					update();
@@ -476,15 +441,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 					selected.setBorder(null);
 					selected=(Card) arg0.getComponent();
 					selected.setBorder(BorderFactory.createLineBorder(Color.red));
-					//System.out.println("new card ("+ selected.toString()+") selected");
+					//System.out.println("new card selected");
 				}
-			}
+			
 			   }
 				
 			   //System.out.println("mouse clicked");
 			   //this.update();
 			update();
-			}
+	}
 	
 
 	@Override

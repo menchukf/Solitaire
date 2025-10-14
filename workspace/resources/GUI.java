@@ -1,6 +1,7 @@
 package resources;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
        }catch(IOException e) {
     	   e.printStackTrace();
        }
+
+	   JPanel panel1 = new JPanel(new FlowLayout());
+	   panel1.setPreferredSize(new Dimension(200,200));
+	   panel1.setBorder(BorderFactory.createMatteBorder(
+                                    1, 5, 1, 1, Color.red));
+	   this.getContentPane().add(panel1);
+
        
        /*******
         * This is just a test to make sure images are being read correctly on your machine. Please replace

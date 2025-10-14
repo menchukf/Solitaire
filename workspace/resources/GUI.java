@@ -21,8 +21,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   this.game= game;
         //Create and set up the window.
        setTitle("Solitaire");
-       setSize(900,700);
+       setSize(1010,600);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	   
        
        // this supplies the background
        try {
@@ -33,24 +35,33 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
        }catch(IOException e) {
     	   e.printStackTrace();
        }
+	   getContentPane().setLayout(new GridLayout(2,1));
+	   JPanel panel = new JPanel();
+	   panel.setBorder(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED));
+	   panel.setSize(new Dimension(1000,400));
+	   panel.add(new JLabel("Solitaire"));
+	   panel.setOpaque(false);
+	   add(panel);
+	   JPanel panel2 = new JPanel();
+	   panel2.setBorder(new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW));
+	   panel2.setSize(new Dimension(1000,100));
+	   
+	   panel2.setOpaque(false);
+	   add(panel2);
+	   
 
-	   JPanel panel1 = new JPanel(new FlowLayout());
-	   panel1.setPreferredSize(new Dimension(200,200));
-	   panel1.setBorder(BorderFactory.createMatteBorder(
-                                    1, 5, 1, 1, Color.red));
-	   this.getContentPane().add(panel1);
-
+	   
        
        /*******
         * This is just a test to make sure images are being read correctly on your machine. Please replace
         * once you have confirmed that the card shows up properly. The code below should allow you to play the solitare
         * game once it's fully created.
         */
-       Card card = new Card(2, Card.Suit.Diamonds);
+		 Card card = new Card(2, Card.Suit.Diamonds);
+		 card.setPreferredSize(new Dimension(100,100));
        System.out.println(card);
-       this.add(card);    
-
-        this.setVisible(true);
+       panel2.add(card);
+    	this.setVisible(true);
     }
 
 

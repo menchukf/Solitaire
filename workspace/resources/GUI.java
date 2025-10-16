@@ -35,20 +35,59 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
        }catch(IOException e) {
     	   e.printStackTrace();
        }
-	   getContentPane().setLayout(new GridLayout(2,1));
+		setLayout(new GridBagLayout());// set the layout
+    	GridBagConstraints c = new GridBagConstraints();// special class used to configure how items should fit into the container.
+	   //getContentPane().setLayout(new GridLayout(2,1));
 	   JPanel panel = new JPanel();
+	   c.fill = GridBagConstraints.VERTICAL;
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
 	   panel.setBorder(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED));
-	   panel.setSize(new Dimension(1000,400));
-	   panel.add(new JLabel("Solitaire"));
+	   panel.setSize(new Dimension(200,165));
+	   panel.add(new JLabel("Card Pile"));
 	   panel.setOpaque(false);
-	   add(panel);
+	   add(panel,c);
+
 	   JPanel panel2 = new JPanel();
+	   c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0;
+		c.ipady = 400;
+        c.gridx = 1;
+        c.gridy = 2;
+		c.gridwidth = 2;
 	   panel2.setBorder(new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW));
-	   panel2.setSize(new Dimension(1000,100));
-	   
+	   panel2.setSize(new Dimension(1000,400));
+	   panel2.setLocation(0,165);
 	   panel2.setOpaque(false);
-	   add(panel2);
+	   panel2.add(new JLabel("Playing field"));
+	   add(panel2,c);
 	   
+	   JPanel panel3 = new JPanel();
+	   c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 0;
+		c.gridwidth = 1;
+	   panel3.setBorder(new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE));
+	   panel3.setSize(new Dimension(250,165));
+	   panel3.setLocation(200,0);
+	   panel3.add(new JLabel("Card selection pile"));
+	   panel3.setOpaque(false);
+	   add(panel3,c);
+
+	   JPanel panel4 = new JPanel();
+	   c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 0;
+		c.gridwidth = 1;
+	   panel4.setBorder(new BevelBorder(BevelBorder.RAISED, Color.GREEN, Color.GREEN));
+	   panel4.setSize(new Dimension(550,165));
+	   panel4.setLocation(450,0);
+	   panel4.add(new JLabel("Card sorted piles"));
+	   panel4.setOpaque(false);
+	   add(panel4,c);
 
 	   
        
@@ -57,10 +96,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
         * once you have confirmed that the card shows up properly. The code below should allow you to play the solitare
         * game once it's fully created.
         */
-		 Card card = new Card(2, Card.Suit.Diamonds);
+		 /*Card card = new Card(2, Card.Suit.Diamonds);
 		 card.setPreferredSize(new Dimension(100,100));
        System.out.println(card);
-       panel2.add(card);
+       panel2.add(card);*/
     	this.setVisible(true);
     }
 

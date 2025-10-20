@@ -1,5 +1,6 @@
 package resources;
 import javax.imageio.ImageIO;
+import javax.sql.rowset.FilteredRowSet;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
@@ -39,8 +40,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
     	GridBagConstraints c = new GridBagConstraints();// special class used to configure how items should fit into the container.
 	   //getContentPane().setLayout(new GridLayout(2,1));
 	   JPanel panel = new JPanel();
-	   c.fill = GridBagConstraints.VERTICAL;
-        c.weightx = 0.5;
+	   c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.15;
+		c.ipady = 200;
         c.gridx = 0;
         c.gridy = 0;
 	   panel.setBorder(new BevelBorder(BevelBorder.RAISED, Color.RED, Color.RED));
@@ -51,11 +53,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	   JPanel panel2 = new JPanel();
 	   c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.0;
-		c.ipady = 400;
-        c.gridx = 1;
+	   c.weightx = 0.5;
+		c.ipady = 350;
+        c.gridx = 0;
         c.gridy = 2;
-		c.gridwidth = 2;
+		c.gridwidth = 3;
 	   panel2.setBorder(new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.YELLOW));
 	   panel2.setSize(new Dimension(1000,400));
 	   panel2.setLocation(0,165);
@@ -65,8 +67,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 	   
 	   JPanel panel3 = new JPanel();
 	   c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
+        c.weightx = 0.25;
         c.gridx = 1;
+		c.ipady = 200;
         c.gridy = 0;
 		c.gridwidth = 1;
 	   panel3.setBorder(new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE));
@@ -78,7 +81,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener, MouseM
 
 	   JPanel panel4 = new JPanel();
 	   c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
+        c.weightx = 0.6;
         c.gridx = 2;
         c.gridy = 0;
 		c.gridwidth = 1;

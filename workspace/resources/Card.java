@@ -100,13 +100,14 @@ public class Card extends JPanel{
 			try {
 				// Load the image for the current file
 				URL url = getClass().getResource(this.toString() +".png");
+				System.out.println(url);
 				image = ImageIO.read(url);
-				//System.out.println(url);
-				URL urlback = getClass().getResource("back.png"); 
+								URL urlback = getClass().getResource("back.png"); 
 				backImage = ImageIO.read(urlback);
 				
 				setBounds(0, 0, image.getWidth(), image.getHeight());
 			} catch(IOException e) {
+				System.out.print("error caught");
 				e.printStackTrace();
 			}
 			
